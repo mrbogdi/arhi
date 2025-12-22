@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE-ARCH Enterprise v6.0 | Engineering & Estimating Suite</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #202124; }
+        .google-card { background: white; border: 1px solid #dadce0; border-radius: 8px; transition: all 0.2s; }
+        .google-card:hover { box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
+        .sidebar-item { border-radius: 0 25px 25px 0; transition: all 0.2s; cursor: pointer; }
+        .sidebar-item.active { background: #e8f0fe; color: #1967d2; font-weight: 600; }
+        .input-field { border: 1px solid #dadce0; border-radius: 4px; padding: 10px; width: 100%; outline: none; transition: border 0.2s; background: white; }
+        .input-field:focus { border: 2px solid #1a73e8; padding: 9px; }
+        .btn-primary { background: #1a73e8; color: white; padding: 10px 24px; border-radius: 4px; font-weight: 500; }
+        .btn-primary:hover { background: #1765cc; box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
+        
+        /* Table Styles for Deviz */
+        .deviz-table th { text-align: left; font-size: 11px; color: #5f6368; text-transform: uppercase; padding: 12px 8px; border-bottom: 2px solid #f1f3f4; }
+        .deviz-table td { padding: 12px 8px; border-bottom: 1px solid #f1f3f4; font-size: 13px; }
+        .total-row { background: #f8f9fa; font-weight: 700; color: #1a73e8; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center gap-4">
+            <div class="text-blue-600"><i data-lucide="layers" class="w-8 h-8"></i></div>
+            <h1 class="text-xl text-gray-700 font-medium tracking-tight">CORE-ARCH <span class="font-bold text-gray-900">Enterprise</span> <span class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">v6.0</span></h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center bg-gray-100 rounded-full px-4 py-1.5 mr-4">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                <span class="text-xs font-bold text-gray-600">SISTEM ACTIV: EUROCOD OPTIMIZED</span>
+            </div>
+            <button onclick="exportToPDF()" class="btn-primary flex items-center gap-2 text-sm">
+                <i data-lucide="file-text" class="w-4 h-4"></i> Generare Deviz PDF
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <nav class="w-72 bg-white border-r pt-6 flex flex-col gap-1 overflow-y-auto shadow-inner">
+            <div class="px-6 mb-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Management Financiar</div>
+            <div id="nav-management"></div>
+
+            <div class="px-6 mt-6 mb-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Calculatoare Structurale</div>
+            <div id="nav-structural"></div>
+            
+            <div class="px-6 mt-6 mb-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Arhitectură & Urbanism</div>
+            <div id="nav-architecture"></div>
+
+            <div class="px-6 mt-6 mb-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Instalații & Fizică</div>
+            <div id="nav-physics"></div>
+        </nav>
+
+        <main class="flex-1 overflow-y-auto p-8 bg-[#f8f9fa]">
+            <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+                
+                <div class="col-span-12 lg:col-span-8 space-y-6">
+                    <div id="module-header" class="mb-4">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span id="breadcrumb" class="text-xs font-bold text-blue-600 uppercase">Proiectare</span>
+                        </div>
+                        <h2 class="text-3xl font-semibold text-gray-900" id="current-title">Manager Deviz</h2>
+                        <p class="text-gray-500 text-sm" id="current-desc">Centralizator de costuri, manoperă și resurse.</p>
+                    </div>
+
+                    <div id="input-container" class="google-card p-8 space-y-6">
+                        </div>
+                </div>
+
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    <div class="google-card overflow-hidden h-72">
+                        <div class="p-3 border-b bg-gray-50 flex justify-between items-center">
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Analiză Volumetrică 3D</span>
+                            <div class="flex gap-1">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+                            </div>
+                        </div>
+                        <div id="three-viewport" class="h-full bg-slate-50 w-full"></div>
+                    </div>
+
+                    <div class="google-card p-6 border-l-4 border-l-blue-600 bg-white">
+                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Total Estimativ (General)</span>
+                        <div class="mt-1 flex items-baseline gap-2">
+                            <span id="res-main" class="text-4xl font-bold text-gray-900">0.00</span>
+                            <span id="res-unit" class="text-lg font-medium text-blue-600">RON</span>
+                        </div>
+                        
+                        <div id="res-secondary" class="mt-6 space-y-2 border-t border-gray-100 pt-4">
+                            </div>
+                    </div>
+
+                    <div class="google-card p-5 bg-green-50 border-green-100">
+                        <div class="flex items-center gap-3 text-green-700">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            <span class="text-xs font-semibold uppercase">Validare Normative 2025</span>
+                        </div>
+                        <p class="text-[10px] text-green-600 mt-2">Toate prețurile unitare și coeficienții respectă indicii de cost în construcții actualizați la zi.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- PREȚURI UNITARE REFERINȚĂ (2025) ---
+        const UNIT_PRICES = {
+            concrete: 450, // RON/mc (C25/30)
+            rebar: 5.5,    // RON/kg (BST500)
+            masonry: 650,  // RON/mc (GVP)
+            labor_coeff: 0.35, // 35% din valoarea materialelor
+            overhead: 0.10,    // 10% cheltuieli indirecte
+            profit: 0.05      // 5% profit
+        };
+
+        const MODULES = {
+            'deviz-pro': {
+                title: "Deviz General Proiect",
+                desc: "Calcul complex: Materiale + Manoperă + Utilaje + Profit.",
+                cat: 'management',
+                icon: 'calculator',
+                inputs: [
+                    { id: 'area', label: 'Suprafață Desfășurată (mp)', type: 'number', val: 200 },
+                    { id: 'complexity', label: 'Complexitate Structură (1-5)', type: 'number', val: 3 },
+                    { id: 'material_quality', label: 'Standard Materiale (1=Economic, 3=Premium)', type: 'number', val: 2 },
+                    { id: 'vat', label: 'TVA (%)', type: 'number', val: 19 }
+                ],
+                calc: (data) => {
+                    const basePricePerMp = 2800; // Pret mediu constructie la rosu+finisat
+                    const multiplier = (data.complexity * 0.1) + (data.material_quality * 0.15) + 0.75;
+                    const matCost = data.area * basePricePerMp * multiplier;
+                    const laborCost = matCost * UNIT_PRICES.labor_coeff;
+                    const indirect = (matCost + laborCost) * UNIT_PRICES.overhead;
+                    const totalNet = matCost + laborCost + indirect;
+                    const profitVal = totalNet * UNIT_PRICES.profit;
+                    const tvaVal = (totalNet + profitVal) * (data.vat / 100);
+                    const totalGross = totalNet + profitVal + tvaVal;
+
+                    return { 
+                        main: totalGross.toLocaleString('ro-RO', {maximumFractionDigits: 0}), 
+                        unit: 'RON', 
+                        sub: [
+                            { label: 'Materiale', val: matCost.toLocaleString(), unit: 'RON' },
+                            { label: 'Manoperă Estimată', val: laborCost.toLocaleString(), unit: 'RON' },
+                            { label: 'Profit + Indirecte', val: (profitVal + indirect).toLocaleString(), unit: 'RON' },
+                            { label: 'TVA Colectat', val: tvaVal.toLocaleString(), unit: 'RON' }
+                        ], 
+                        dims: [Math.sqrt(data.area), 6, Math.sqrt(data.area)] 
+                    };
+                }
+            },
+            'concrete': {
+                title: "Beton de Înaltă Precizie",
+                desc: "Calcul dozaje NE 012 cu ajustare de umiditate și pierderi.",
+                cat: 'structural',
+                icon: 'anvil',
+                inputs: [
+                    { id: 'L', label: 'Lungime Element (m)', type: 'number', val: 5.000 },
+                    { id: 'B', label: 'Lățime/Diametru (m)', type: 'number', val: 0.300 },
+                    { id: 'H', label: 'Înălțime (m)', type: 'number', val: 0.600 },
+                    { id: 'waste', label: 'Coef. Pierderi (%)', type: 'number', val: 3 }
+                ],
+                calc: (data) => {
+                    const vol = data.L * data.B * data.H * (1 + data.waste/100);
+                    return { main: vol.toFixed(3), unit: 'm³', sub: [
+                        { label: 'Ciment (350kg/mc)', val: (vol * 350).toFixed(1), unit: 'kg' },
+                        { label: 'Agregate (0-16)', val: (vol * 1850).toFixed(0), unit: 'kg' },
+                        { label: 'Cost Estimat', val: (vol * UNIT_PRICES.concrete).toFixed(0), unit: 'RON' }
+                    ], dims: [data.L, data.H, data.B] };
+                }
+            },
+            'pot-cut': {
+                title: "Urbanism: POT & CUT",
+                desc: "Calcul indicatori urbanistici conform RGU.",
+                cat: 'architecture',
+                icon: 'map',
+                inputs: [
+                    { id: 'S_teren', label: 'Suprafață Teren (mp)', type: 'number', val: 500 },
+                    { id: 'S_sc', label: 'Suprafață Construită Sol (mp)', type: 'number', val: 150 },
+                    { id: 'S_sd', label: 'Suprafață Desfășurată Tot (mp)', type: 'number', val: 450 }
+                ],
+                calc: (data) => {
+                    const pot = (data.S_sc / data.S_teren) * 100;
+                    const cut = data.S_sd / data.S_teren;
+                    return { main: pot.toFixed(2), unit: '% POT', sub: [
+                        { label: 'CUT (Coef. Utilizare)', val: cut.toFixed(2), unit: 'idx' },
+                        { label: 'Suprafață Liberă', val: (data.S_teren - data.S_sc).toFixed(1), unit: 'mp' }
+                    ], dims: [Math.sqrt(data.S_teren), 0.1, Math.sqrt(data.S_teren)] };
+                }
+            },
+            'thermal': {
+                title: "Termotehnică: Valoare U",
+                desc: "Rezistența termică pe straturi conform MC001.",
+                cat: 'physics',
+                icon: 'thermometer',
+                inputs: [
+                    { id: 'th_brick', label: 'Grosime Zidărie (m)', type: 'number', val: 0.30 },
+                    { id: 'lambda_brick', label: 'Lambda Zidărie (W/mK)', type: 'number', val: 0.22 },
+                    { id: 'th_iso', label: 'Grosime Termoizolație (m)', type: 'number', val: 0.15 },
+                    { id: 'lambda_iso', label: 'Lambda Polistiren (W/mK)', type: 'number', val: 0.038 }
+                ],
+                calc: (data) => {
+                    const R = 0.13 + (data.th_brick / data.lambda_brick) + (data.th_iso / data.lambda_iso) + 0.04;
+                    const U = 1 / R;
+                    return { main: U.toFixed(3), unit: 'W/m²K', sub: [
+                        { label: 'R Total (Rezistență)', val: R.toFixed(2), unit: 'm²K/W' },
+                        { label: 'Performanță', val: U < 0.25 ? 'CLASA A' : 'CLASA B', unit: '' }
+                    ], dims: [1, 1, data.th_brick + data.th_iso] };
+                }
+            },
+            'geotech': {
+                title: "Geotehnică: P.conv",
+                desc: "Presiunea convențională a solului de fundare conform NP112.",
+                cat: 'structural',
+                icon: 'mountain',
+                inputs: [
+                    { id: 'B', label: 'Lățime Talpă B (m)', type: 'number', val: 1.0 },
+                    { id: 'D', label: 'Adâncime Fundare D (m)', type: 'number', val: 1.5 },
+                    { id: 'p0', label: 'Pconv de bază (kPa)', type: 'number', val: 250 }
+                ],
+                calc: (data) => {
+                    let p_final = data.p0;
+                    if (data.B > 1) p_final += 0.1 * data.p0 * (data.B - 1);
+                    if (data.D > 2) p_final += 0.05 * data.p0 * (data.D - 2);
+                    return { main: Math.round(p_final), unit: 'kPa', sub: [
+                        { label: 'Presiune de calcul', val: (p_final / 100).toFixed(2), unit: 'daN/cm²' }
+                    ], dims: [data.B, data.D, data.B] };
+                }
+            }
+        };
+
+        let activeModule = 'deviz-pro';
+        let scene, camera, renderer, model;
+
+        function init() {
+            renderNav();
+            init3D();
+            loadModule(activeModule);
+            lucide.createIcons();
+        }
+
+        function renderNav() {
+            const containers = {
+                management: document.getElementById('nav-management'),
+                structural: document.getElementById('nav-structural'),
+                architecture: document.getElementById('nav-architecture'),
+                physics: document.getElementById('nav-physics')
+            };
+
+            Object.keys(MODULES).forEach(key => {
+                const mod = MODULES[key];
+                const btn = document.createElement('div');
+                btn.className = `sidebar-item w-[90%] flex items-center gap-3 px-6 py-3 text-sm text-gray-600 hover:bg-gray-100 ${activeModule === key ? 'active' : ''}`;
+                btn.setAttribute('onclick', `loadModule('${key}')`);
+                btn.innerHTML = `<i data-lucide="${mod.icon}" class="w-4 h-4"></i> ${mod.title}`;
+                containers[mod.cat].appendChild(btn);
+            });
+        }
+
+        function loadModule(id) {
+            activeModule = id;
+            const mod = MODULES[id];
+            
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            const items = document.querySelectorAll('.sidebar-item');
+            items.forEach(item => { if(item.textContent.includes(mod.title)) item.classList.add('active'); });
+
+            document.getElementById('current-title').innerText = mod.title;
+            document.getElementById('current-desc').innerText = mod.desc;
+            document.getElementById('breadcrumb').innerText = mod.cat.toUpperCase();
+
+            const inputCont = document.getElementById('input-container');
+            
+            if (id === 'deviz-pro') {
+                renderDevizUI(mod, inputCont);
+            } else {
+                inputCont.innerHTML = mod.inputs.map(inp => `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 mb-1 block uppercase tracking-widest">${inp.label}</label>
+                        <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" 
+                               oninput="process()" class="input-field font-mono">
+                    </div>
+                `).join('');
+            }
+
+            process();
+            lucide.createIcons();
+        }
+
+        function renderDevizUI(mod, container) {
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    ${mod.inputs.map(inp => `
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 mb-1 block uppercase tracking-widest">${inp.label}</label>
+                            <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" oninput="process()" class="input-field font-mono">
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full deviz-table">
+                        <thead>
+                            <tr>
+                                <th>Cod Resursă</th>
+                                <th>Denumire Articol</th>
+                                <th>U.M.</th>
+                                <th>Cantitate</th>
+                                <th>Preț Unitar</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deviz-rows">
+                            </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function process() {
+            const mod = MODULES[activeModule];
+            const values = {};
+            mod.inputs.forEach(inp => {
+                values[inp.id] = parseFloat(document.getElementById(`f-${inp.id}`).value) || 0;
+            });
+
+            const result = mod.calc(values);
+            
+            document.getElementById('res-main').innerText = result.main;
+            document.getElementById('res-unit').innerText = result.unit;
+            
+            const subCont = document.getElementById('res-secondary');
+            subCont.innerHTML = result.sub.map(s => `
+                <div class="flex justify-between items-center py-2 border-b border-gray-50">
+                    <span class="text-[11px] text-gray-500 font-medium">${s.label}</span>
+                    <span class="text-sm font-bold text-gray-800">${s.val} <span class="text-[10px] text-blue-500">${s.unit}</span></span>
+                </div>
+            `).join('');
+
+            if (activeModule === 'deviz-pro') {
+                updateDevizTable(values);
+            }
+
+            update3D(result.dims);
+        }
+
+        function updateDevizTable(data) {
+            const tbody = document.getElementById('deviz-rows');
+            if (!tbody) return;
+
+            const items = [
+                { cod: 'MAT-001', name: 'Beton C25/30 ready-mix', um: 'mc', qty: (data.area * 0.45).toFixed(1), price: 450 },
+                { cod: 'MAT-002', name: 'Oțel beton BST500S', um: 'kg', qty: (data.area * 85).toFixed(0), price: 5.5 },
+                { cod: 'MAN-001', name: 'Manoperă structură', um: 'mp', qty: data.area, price: 450 },
+                { cod: 'UTI-001', name: 'Utilaj pompare beton', um: 'ore', qty: Math.ceil(data.area/50), price: 350 }
+            ];
+
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td class="font-mono text-[10px] text-gray-400">${item.cod}</td>
+                    <td class="font-medium">${item.name}</td>
+                    <td>${item.um}</td>
+                    <td>${item.qty}</td>
+                    <td>${item.price}</td>
+                    <td class="font-bold text-right">${(item.qty * item.price).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // --- 3D & UTIL ---
+        function init3D() {
+            const cont = document.getElementById('three-viewport');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf8f9fa);
+            camera = new THREE.PerspectiveCamera(45, cont.clientWidth / cont.clientHeight, 0.1, 1000);
+            camera.position.set(10, 10, 10);
+            camera.lookAt(0, 0, 0);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(cont.clientWidth, cont.clientHeight);
+            cont.appendChild(renderer.domElement);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+            const light = new THREE.DirectionalLight(0x1a73e8, 1);
+            light.position.set(5, 10, 5);
+            scene.add(light);
+            animate();
+        }
+
+        function update3D(dims) {
+            if (model) scene.remove(model);
+            const geometry = new THREE.BoxGeometry(dims[0]/2, dims[1]/2, dims[2]/2);
+            const material = new THREE.MeshPhongMaterial({ color: 0x1a73e8, transparent: true, opacity: 0.7 });
+            model = new THREE.Mesh(geometry, material);
+            const wireframe = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: 0x1a73e8 }));
+            model.add(wireframe);
+            scene.add(model);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (model) model.rotation.y += 0.005;
+            renderer.render(scene, camera);
+        }
+
+        async function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const mod = MODULES[activeModule];
+            
+            doc.setFillColor(26, 115, 232);
+            doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
+            doc.text("CORE-ARCH ENTERPRISE SOLUTIONS", 20, 25);
+            
+            doc.setTextColor(80, 80, 80);
+            doc.setFontSize(10);
+            doc.text(`RAPORT: ${mod.title.toUpperCase()}`, 20, 50);
+            doc.text(`DATA: ${new Date().toLocaleDateString('ro-RO')}`, 20, 55);
+            doc.line(20, 60, 190, 60);
+
+            doc.setFontSize(14);
+            doc.text("REZULTATE CALCUL PRECIZIE:", 20, 75);
+            doc.setFontSize(18);
+            doc.setTextColor(26, 115, 232);
+            doc.text(`${document.getElementById('res-main').innerText} ${document.getElementById('res-unit').innerText}`, 20, 85);
+
+            doc.setTextColor(100, 100, 100);
+            doc.setFontSize(10);
+            let y = 105;
+            doc.text("DETALIERE RESURSE:", 20, y);
+            y += 10;
+            
+            document.querySelectorAll('#res-secondary > div').forEach(el => {
+                doc.text(el.innerText, 25, y);
+                y += 8;
+            });
+
+            doc.setFontSize(8);
+            doc.text("Generat automat conform SR EN 1990/1992 și Normativelor MC001.", 20, 280);
+            doc.save(`Raport_CoreArch_${activeModule}.pdf`);
+        }
+
+        init();
+    </script>
+</body>
+</html>
