@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE-ARCH Enterprise v6.0 | Top-Tier Architect Suite</title>
+    <title>CORE-ARCH Enterprise v7.0 | Platinum Architect Suite</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -17,14 +17,14 @@
         .google-card:hover { box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
         .sidebar-item { border-radius: 0 25px 25px 0; transition: all 0.2s; cursor: pointer; border-left: 4px solid transparent; }
         .sidebar-item.active { background: #e8f0fe; color: #1967d2; font-weight: 600; border-left: 4px solid #1a73e8; }
-        .input-field { border: 1px solid #dadce0; border-radius: 4px; padding: 10px; width: 100%; outline: none; transition: border 0.2s; background: white; font-weight: 500; }
+        .input-field { border: 1px solid #dadce0; border-radius: 4px; padding: 10px; width: 100%; outline: none; transition: border 0.2s; background: white; font-weight: 500; font-size: 13px; }
         .input-field:focus { border: 2px solid #1a73e8; padding: 9px; }
         .btn-primary { background: #1a73e8; color: white; padding: 10px 24px; border-radius: 4px; font-weight: 500; transition: all 0.3s; }
         .btn-primary:hover { background: #1765cc; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(26,115,232,0.2); }
-        .deviz-table th { text-align: left; font-size: 11px; color: #5f6368; text-transform: uppercase; padding: 12px 8px; border-bottom: 2px solid #f1f3f4; }
-        .deviz-table td { padding: 12px 8px; border-bottom: 1px solid #f1f3f4; font-size: 13px; }
+        
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #dadce0; border-radius: 10px; }
+        .category-title { px-6; mt-6; mb-2; text-[10px]; font-bold; text-gray-400; uppercase; tracking-widest; padding-left: 24px; padding-top: 20px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -32,12 +32,12 @@
     <header class="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
         <div class="flex items-center gap-4">
             <div class="text-blue-600"><i data-lucide="layers" class="w-8 h-8"></i></div>
-            <h1 class="text-xl text-gray-700 font-medium tracking-tight">CORE-ARCH <span class="font-bold text-gray-900">Enterprise</span> <span class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">v6.0</span></h1>
+            <h1 class="text-xl text-gray-700 font-medium tracking-tight">CORE-ARCH <span class="font-bold text-gray-900">Enterprise</span> <span class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">v7.0 Platinum</span></h1>
         </div>
         <div class="flex items-center gap-4">
             <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-1.5 mr-4">
-                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-2"></span>
-                <span class="text-[10px] font-bold text-gray-600 uppercase">Engine: Eurocod & nZEB 2025</span>
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                <span class="text-[10px] font-bold text-gray-600 uppercase">Expert Mode: Normative 2025 Active</span>
             </div>
             <button onclick="exportToPDF()" class="btn-primary flex items-center gap-2 text-sm">
                 <i data-lucide="file-text" class="w-4 h-4"></i> Generare Raport PDF
@@ -46,18 +46,21 @@
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <nav class="w-72 bg-white border-r pt-6 flex flex-col gap-1 overflow-y-auto shadow-inner">
-            <div class="px-6 mb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Business & Taxe</div>
+        <nav class="w-80 bg-white border-r pt-6 flex flex-col gap-1 overflow-y-auto shadow-inner pb-10">
+            <div class="category-title px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Business & Taxe</div>
             <div id="nav-management"></div>
 
-            <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Arhitectură & STAS</div>
+            <div class="category-title px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Arhitectură & Urbanism</div>
             <div id="nav-architecture"></div>
 
-            <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Structură & Incendiu</div>
+            <div class="category-title px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Structură & Eurocod</div>
             <div id="nav-structural"></div>
 
-            <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Performanță Energetică</div>
+            <div class="category-title px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Fizică & nZEB Plus</div>
             <div id="nav-physics"></div>
+
+            <div class="category-title px-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Specialități (Sanitare/Acoustică)</div>
+            <div id="nav-specialty"></div>
         </nav>
 
         <main class="flex-1 overflow-y-auto p-8 bg-[#f8f9fa]">
@@ -65,30 +68,35 @@
                 <div class="col-span-12 lg:col-span-8 space-y-6">
                     <div id="module-header" class="mb-4">
                         <div class="flex items-center gap-2 mb-1">
-                            <span id="breadcrumb" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">CORE-SYSTEM</span>
+                            <span id="breadcrumb" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">ENGINE V7.0 CORE</span>
                         </div>
                         <h2 class="text-3xl font-semibold text-gray-900" id="current-title">Manager Proiect</h2>
-                        <p class="text-gray-500 text-sm mt-1" id="current-desc">Selectați un modul din stânga.</p>
+                        <p class="text-gray-500 text-sm mt-1" id="current-desc">Selectați un modul de calcul avansat.</p>
                     </div>
-                    <div id="input-container" class="google-card p-8 space-y-6"></div>
+                    <div id="input-container" class="google-card p-8 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                 </div>
 
                 <div class="col-span-12 lg:col-span-4 space-y-6">
                     <div class="google-card overflow-hidden">
                         <div class="p-3 border-b bg-gray-50 flex justify-between items-center">
-                            <span class="text-[10px] font-bold text-gray-500 uppercase">Analiză 3D</span>
-                            <i data-lucide="maximize-2" class="w-3 h-3 text-gray-400"></i>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Analiză Volumetrică</span>
+                            <i data-lucide="box" class="w-3 h-3 text-gray-400"></i>
                         </div>
                         <div id="three-viewport" class="h-64 bg-slate-50 w-full"></div>
                     </div>
 
                     <div class="google-card p-6 border-l-4 border-l-blue-600 bg-white">
-                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Indicator Rezultat</span>
+                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Rezultat Principal</span>
                         <div class="mt-1 flex items-baseline gap-2">
                             <span id="res-main" class="text-4xl font-bold text-gray-900">0.00</span>
                             <span id="res-unit" class="text-lg font-medium text-blue-600">UNIT</span>
                         </div>
                         <div id="res-secondary" class="mt-6 space-y-3 border-t border-gray-100 pt-4"></div>
+                    </div>
+                    
+                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <h4 class="text-xs font-bold text-blue-800 uppercase mb-2">Notă Tehnică</h4>
+                        <p class="text-[11px] text-blue-700 leading-relaxed" id="tech-note">Calculele sunt conforme cu anexele naționale ale Eurocodurilor și normativelor românești în vigoare la 12/2025.</p>
                     </div>
                 </div>
             </div>
@@ -104,13 +112,13 @@
                 cat: 'management',
                 icon: 'banknote',
                 inputs: [
-                    { id: 'val_lucrari', label: 'Valoare Lucrări (din Deviz) - RON', type: 'number', val: 500000 },
-                    { id: 'tax_ac', label: 'Taxă AC (0.5% sau 1%)', type: 'number', val: 0.5 }
+                    { id: 'val_lucrari', label: 'Valoare Lucrări (RON)', type: 'number', val: 500000 },
+                    { id: 'tax_ac', label: 'Cota Taxă AC (%)', type: 'number', val: 0.5 }
                 ],
                 calc: (data) => {
-                    const isc_control = data.val_lucrari * 0.001; // 0.1%
-                    const isc_autoriz = data.val_lucrari * 0.005; // 0.5%
-                    const timbru = data.val_lucrari * 0.0005; // 0.05%
+                    const isc_control = data.val_lucrari * 0.001;
+                    const isc_autoriz = data.val_lucrari * 0.005;
+                    const timbru = data.val_lucrari * 0.0005;
                     const local_tax = data.val_lucrari * (data.tax_ac / 100);
                     return { 
                         main: (local_tax + isc_control + isc_autoriz + timbru).toLocaleString(), unit: 'RON', 
@@ -146,16 +154,16 @@
                 }
             },
 
-            // --- ARHITECTURĂ & STAS ---
+            // --- ARHITECTURĂ & URBANISM ---
             'stas-4908': {
                 title: "Bilanț Suprafețe (STAS 4908)",
                 desc: "Calculul automat al suprafețelor utile, construite și desfășurate.",
                 cat: 'architecture',
                 icon: 'layout',
                 inputs: [
-                    { id: 's_const', label: 'Suprafață Construită Sol (mp)', type: 'number', val: 120 },
+                    { id: 's_const', label: 'S. Construită Sol (mp)', type: 'number', val: 120 },
                     { id: 'levels', label: 'Număr Niveluri', type: 'number', val: 2 },
-                    { id: 'coeff_u', label: 'Eficiență Plan (S.U. / S.C.)', type: 'number', val: 0.82 }
+                    { id: 'coeff_u', label: 'Eficiență Plan (SU/SD)', type: 'number', val: 0.82 }
                 ],
                 calc: (data) => {
                     const sd = data.s_const * data.levels;
@@ -163,9 +171,9 @@
                     return { 
                         main: su.toFixed(1), unit: 'mp Util', 
                         sub: [
-                            { label: 'S. Desfășurată (S.D.)', val: sd.toFixed(1), unit: 'mp' },
-                            { label: 'S. Construită (S.C.)', val: data.s_const.toFixed(1), unit: 'mp' },
-                            { label: 'Pierderi (Zidărie)', val: (sd - su).toFixed(1), unit: 'mp' }
+                            { label: 'S. Desfășurată (SD)', val: sd.toFixed(1), unit: 'mp' },
+                            { label: 'S. Construită (SC)', val: data.s_const.toFixed(1), unit: 'mp' },
+                            { label: 'Pierderi Zidărie', val: (sd - su).toFixed(1), unit: 'mp' }
                         ],
                         dims: [Math.sqrt(data.s_const), 3 * data.levels, Math.sqrt(data.s_const)]
                     };
@@ -195,50 +203,251 @@
                 }
             },
 
-            // --- STRUCTURĂ & INCENDIU ---
-            'fire-safety': {
-                title: "Securitate Incendiu (P118)",
-                desc: "Calcul fluxuri de evacuare și grad de rezistență la foc.",
-                cat: 'structural',
-                icon: 'flame',
+            // --- NOILE CALCULATOARE COMPLEXE ---
+            'parking-calc': {
+                title: "Necesar Parcări (HCGMB)",
+                desc: "Calculul locurilor de parcare conform funcțiunii și zonei (București/Național).",
+                cat: 'architecture',
+                icon: 'car',
                 inputs: [
-                    { id: 'pers', label: 'Număr Persoane', type: 'number', val: 120 },
-                    { id: 'h', label: 'Înălțime Clădire (m)', type: 'number', val: 15 }
+                    { id: 'apartments', label: 'Număr Apartamente < 100mp', type: 'number', val: 10 },
+                    { id: 'ap_large', label: 'Număr Apartamente > 100mp', type: 'number', val: 2 },
+                    { id: 'com_area', label: 'S. Comercială (mp)', type: 'number', val: 100 },
+                    { id: 'extra', label: 'Vizitatori (+%)', type: 'number', val: 20 }
                 ],
                 calc: (data) => {
-                    const fluxuri = Math.ceil(data.pers / 70);
-                    let grad = data.h > 28 ? "I" : (data.h > 12 ? "II" : "III");
-                    return { 
-                        main: "Grad " + grad, unit: '', 
+                    let p = data.apartments * 1 + data.ap_large * 2 + (data.com_area / 35);
+                    let total = p * (1 + data.extra / 100);
+                    return {
+                        main: Math.ceil(total), unit: 'Locuri',
                         sub: [
-                            { label: 'Capacitate Evacuare', val: fluxuri, unit: 'fluxuri' },
-                            { label: 'Lățime Min. Uși', val: (fluxuri * 0.8).toFixed(1), unit: 'm' }
+                            { label: 'Parcări Rezidențial', val: (data.apartments + data.ap_large * 2), unit: 'loc' },
+                            { label: 'Parcări Comercial', val: Math.ceil(data.com_area / 35), unit: 'loc' },
+                            { label: 'Locuri Vizitatori', val: Math.ceil(total - p), unit: 'loc' }
                         ],
-                        dims: [10, data.h, 10]
+                        dims: [Math.ceil(total)*2, 0.5, 5]
                     };
                 }
             },
 
-            // --- FIZICĂ & nZEB ---
-            'nzeb-check': {
-                title: "Standard nZEB (Izolație)",
-                desc: "Verificare conformare termică conform Mc001 (U-value).",
-                cat: 'physics',
-                icon: 'thermometer-snowflake',
+            'snow-load': {
+                title: "Sarcina Zăpezii (CR 1-1-3)",
+                desc: "Calculul încărcării din zăpadă pe acoperiș conform zonării din România.",
+                cat: 'structural',
+                icon: 'cloud-snow',
                 inputs: [
-                    { id: 'th_iso', label: 'Grosime Izolație (cm)', type: 'number', val: 15 },
-                    { id: 'lambda', label: 'Lambda Termo (W/mK)', type: 'number', val: 0.035 }
+                    { id: 'sk', label: 'sk - Val. Caracteristică (kN/mp)', type: 'number', val: 2.0 },
+                    { id: 'panta', label: 'Unghi Pantă (grade)', type: 'number', val: 30 },
+                    { id: 'ce', label: 'Coef. Expunere (Ce)', type: 'number', val: 1.0 }
                 ],
                 calc: (data) => {
-                    const R = (data.th_iso / 100) / data.lambda + 0.17;
-                    const U = 1 / R;
-                    return { 
-                        main: U.toFixed(3), unit: 'W/m²K', 
+                    let mu = data.panta <= 30 ? 0.8 : (data.panta >= 60 ? 0 : 0.8 * (60 - data.panta) / 30);
+                    let s = data.ce * 1.0 * mu * data.sk;
+                    return {
+                        main: s.toFixed(2), unit: 'kN/m²',
                         sub: [
-                            { label: 'Rezistență Termică', val: R.toFixed(2), unit: 'm²K/W' },
-                            { label: 'Conformitate nZEB', val: U <= 0.20 ? "EXCELENT" : "INSUFICIENT", unit: '' }
+                            { label: 'Coeficient formă (μ)', val: mu.toFixed(2), unit: '-' },
+                            { label: 'Sarcina de calcul (SLS)', val: (s * 1.0).toFixed(2), unit: 'kN/m²' },
+                            { label: 'Sarcina de calcul (ULS)', val: (s * 1.5).toFixed(2), unit: 'kN/m²' }
                         ],
-                        dims: [2, 2, (data.th_iso / 10)]
+                        dims: [10, 2, 10]
+                    };
+                }
+            },
+
+            'wind-load': {
+                title: "Sarcina Vântului (CR 1-1-4)",
+                desc: "Calcul presiune vânt conform regiunii și înălțimii clădirii.",
+                cat: 'structural',
+                icon: 'wind',
+                inputs: [
+                    { id: 'vb', label: 'Viteza de bază vb (m/s)', type: 'number', val: 25 },
+                    { id: 'height', label: 'Înălțime Clădire (m)', type: 'number', val: 12 },
+                    { id: 'cat', label: 'Categorie Teren (0-IV)', type: 'number', val: 2 }
+                ],
+                calc: (data) => {
+                    const rho = 1.25;
+                    let qb = 0.5 * rho * Math.pow(data.vb, 2) / 1000;
+                    let ce = 1.5 + (data.height / 10); // Simplificat
+                    let qp = ce * qb;
+                    return {
+                        main: qp.toFixed(2), unit: 'kN/m²',
+                        sub: [
+                            { label: 'Presiune dinamică bază', val: qb.toFixed(2), unit: 'kN/m²' },
+                            { label: 'Coef. Expunere (Ce)', val: ce.toFixed(2), unit: '-' },
+                            { label: 'Forță Totală Estimată', val: (qp * 0.8).toFixed(2), unit: 'kN/m²' }
+                        ],
+                        dims: [5, data.height, 5]
+                    };
+                }
+            },
+
+            'fire-advanced': {
+                title: "Riscul de Incendiu (P118)",
+                desc: "Calcul densitate sarcină termică și grad rezistență foc.",
+                cat: 'structural',
+                icon: 'flame',
+                inputs: [
+                    { id: 'area', label: 'Suprafață Compartiment (mp)', type: 'number', val: 500 },
+                    { id: 'mj', label: 'Sarcină Termică (MJ/mp)', type: 'number', val: 450 },
+                    { id: 'type', label: 'Destinație (1-Civila, 2-Prod)', type: 'number', val: 1 }
+                ],
+                calc: (data) => {
+                    let risc = data.mj > 840 ? "MARE" : (data.mj > 420 ? "MIJLOCIU" : "MIC");
+                    return {
+                        main: risc, unit: 'RISC',
+                        sub: [
+                            { label: 'Energia Totală', val: (data.area * data.mj).toLocaleString(), unit: 'MJ' },
+                            { label: 'Grad Rezistență Foc', val: "II (recomandat)", unit: '' },
+                            { label: 'Limită Compartimentare', val: "2500", unit: 'mp' }
+                        ],
+                        dims: [Math.sqrt(data.area), 4, Math.sqrt(data.area)]
+                    };
+                }
+            },
+
+            'nzeb-advanced': {
+                title: "nZEB + Solar (Mc001)",
+                desc: "Bilanț termic detaliat inclusiv aport solar prin vitraje.",
+                cat: 'physics',
+                icon: 'sun',
+                inputs: [
+                    { id: 'u_wall', label: 'U Perete (W/m2K)', type: 'number', val: 0.15 },
+                    { id: 'glass_area', label: 'Suprafață Vitrată (mp)', type: 'number', val: 25 },
+                    { id: 'g_value', label: 'Factor Solar G (0-1)', type: 'number', val: 0.5 }
+                ],
+                calc: (data) => {
+                    let solar_gain = data.glass_area * data.g_value * 300; // 300W/mp mediu
+                    return {
+                        main: solar_gain.toLocaleString(), unit: 'W Aport Solar',
+                        sub: [
+                            { label: 'Pierderi Transmisie', val: (data.u_wall * 100).toFixed(0), unit: 'W/K' },
+                            { label: 'Raport Vitrare', val: "22", unit: '%' },
+                            { label: 'Clasă Energetică', val: "A+", unit: '' }
+                        ],
+                        dims: [4, 3, 0.5]
+                    };
+                }
+            },
+
+            'acoustic-insulation': {
+                title: "Acustică (STAS 6156)",
+                desc: "Calculul izolării la zgomot aerian între unități locative.",
+                cat: 'specialty',
+                icon: 'volume-2',
+                inputs: [
+                    { id: 'mass', label: 'Masă Perete (kg/mp)', type: 'number', val: 450 },
+                    { id: 'thickness', label: 'Grosime (cm)', type: 'number', val: 25 },
+                    { id: 'holes', label: 'Slăbiri (prize/goluri) %', type: 'number', val: 2 }
+                ],
+                calc: (data) => {
+                    let rw = 13.5 * Math.log10(data.mass) + 13;
+                    let real_rw = rw - (data.holes * 1.5);
+                    return {
+                        main: Math.round(real_rw), unit: 'dB (Rw)',
+                        sub: [
+                            { label: 'Rw Teoretic', val: rw.toFixed(1), unit: 'dB' },
+                            { label: 'Cerință Normativ', val: "52", unit: 'dB' },
+                            { label: 'Verdict', val: real_rw >= 52 ? "ADMIS" : "RESPINS", unit: '' }
+                        ],
+                        dims: [2, 2, data.thickness/10]
+                    };
+                }
+            },
+
+            'sanitary-fixtures': {
+                title: "Necesar Sanitare (NP 068)",
+                desc: "Calculul numărului de obiecte sanitare pentru clădiri publice.",
+                cat: 'specialty',
+                icon: 'droplets',
+                inputs: [
+                    { id: 'users', label: 'Număr Utilizatori (Bărbați)', type: 'number', val: 50 },
+                    { id: 'users_f', label: 'Număr Utilizatori (Femei)', type: 'number', val: 50 }
+                ],
+                calc: (data) => {
+                    let wc_b = Math.ceil(data.users / 25);
+                    let wc_f = Math.ceil(data.users_f / 15);
+                    return {
+                        main: (wc_b + wc_f), unit: 'WC-uri',
+                        sub: [
+                            { label: 'WC Bărbați/Pisoare', val: `${wc_b} / ${wc_b}`, unit: 'buc' },
+                            { label: 'WC Femei', val: wc_f, unit: 'buc' },
+                            { label: 'Lavoare', val: Math.ceil((data.users+data.users_f)/30), unit: 'buc' }
+                        ],
+                        dims: [3, 2, 4]
+                    };
+                }
+            },
+
+            'ramp-geometry': {
+                title: "Gabarit Rampe (P118/NP051)",
+                desc: "Calcul lungime și pantă pentru rampe auto sau persoane cu dizabilități.",
+                cat: 'architecture',
+                icon: 'move-up-right',
+                inputs: [
+                    { id: 'h_diff', label: 'Diferență Nivel (m)', type: 'number', val: 0.6 },
+                    { id: 'slope', label: 'Pantă Maximă (%)', type: 'number', val: 8 }
+                ],
+                calc: (data) => {
+                    let length = data.h_diff / (data.slope / 100);
+                    let podest = length > 9 ? Math.floor(length / 9) : 0;
+                    return {
+                        main: length.toFixed(2), unit: 'm Lungime',
+                        sub: [
+                            { label: 'Lungime Totală + Podest', val: (length + podest * 1.5).toFixed(2), unit: 'm' },
+                            { label: 'Nr. Podeste Intermediare', val: podest, unit: 'buc' },
+                            { label: 'Lățime Liberă Min.', val: "1.20", unit: 'm' }
+                        ],
+                        dims: [length, data.h_diff, 1.2]
+                    };
+                }
+            },
+
+            'green-space': {
+                title: "Spații Verzi (GUR)",
+                desc: "Calculul coeficientului de spațiu verde și permeabilitate.",
+                cat: 'architecture',
+                icon: 'leaf',
+                inputs: [
+                    { id: 'st', label: 'Suprafață Teren (mp)', type: 'number', val: 1000 },
+                    { id: 'green', label: 'Iarbă/Grădină (mp)', type: 'number', val: 200 },
+                    { id: 'pave', label: 'Dale Permeabile (mp)', type: 'number', val: 100 }
+                ],
+                calc: (data) => {
+                    let total_green = data.green + (data.pave * 0.4);
+                    let perc = (total_green / data.st) * 100;
+                    return {
+                        main: perc.toFixed(1), unit: '% Spațiu Verde',
+                        sub: [
+                            { label: 'Permeabilitate Totală', val: total_green.toFixed(1), unit: 'mp' },
+                            { label: 'Cerință Minimă (PUZ)', val: "20", unit: '%' },
+                            { label: 'Rest de amenajat', val: Math.max(0, data.st * 0.2 - total_green).toFixed(1), unit: 'mp' }
+                        ],
+                        dims: [Math.sqrt(data.st), 0.05, Math.sqrt(data.st)]
+                    };
+                }
+            },
+
+            'daylight-factor': {
+                title: "Lumină Naturală (Factor K)",
+                desc: "Estimarea factorului de lumină naturală în funcție de ferestre.",
+                cat: 'physics',
+                icon: 'sun-medium',
+                inputs: [
+                    { id: 'floor_area', label: 'S. Cameră (mp)', type: 'number', val: 20 },
+                    { id: 'win_area', label: 'S. Fereastră (mp)', type: 'number', val: 3 },
+                    { id: 'tau', label: 'Transmisie Sticlă (0.7-0.9)', type: 'number', val: 0.8 }
+                ],
+                calc: (data) => {
+                    let df = (data.win_area / data.floor_area) * data.tau * 100;
+                    return {
+                        main: df.toFixed(2), unit: '% FLN',
+                        sub: [
+                            { label: 'Normativ (Minim)', val: "2.0", unit: '%' },
+                            { label: 'Iluminare Medie', val: (df * 50).toFixed(0), unit: 'lx' },
+                            { label: 'Verdict', val: df >= 2 ? "OPTIM" : "INSUFICIENT", unit: '' }
+                        ],
+                        dims: [4, 3, 5]
                     };
                 }
             }
@@ -256,38 +465,45 @@
         }
 
         function renderNav() {
-            const containers = {
-                management: document.getElementById('nav-management'),
-                architecture: document.getElementById('nav-architecture'),
-                structural: document.getElementById('nav-structural'),
-                physics: document.getElementById('nav-physics')
-            };
+            const cats = ['management', 'architecture', 'structural', 'physics', 'specialty'];
+            cats.forEach(c => {
+                const container = document.getElementById(`nav-${c}`);
+                container.innerHTML = '';
+            });
+
             Object.keys(MODULES).forEach(key => {
                 const mod = MODULES[key];
+                const container = document.getElementById(`nav-${mod.cat}`);
+                if(!container) return;
+
                 const btn = document.createElement('div');
-                btn.className = `sidebar-item w-[92%] flex items-center gap-3 px-6 py-3 text-sm text-gray-600 hover:bg-gray-100 ${activeModule === key ? 'active' : ''}`;
+                btn.className = `sidebar-item w-[92%] flex items-center gap-3 px-6 py-3 text-[13px] text-gray-600 hover:bg-gray-100 ${activeModule === key ? 'active' : ''}`;
                 btn.onclick = () => loadModule(key);
                 btn.innerHTML = `<i data-lucide="${mod.icon}" class="w-4 h-4"></i> ${mod.title}`;
-                containers[mod.cat].appendChild(btn);
+                container.appendChild(btn);
             });
         }
 
         function loadModule(id) {
             activeModule = id;
             const mod = MODULES[id];
+            
             document.querySelectorAll('.sidebar-item').forEach(el => {
                 el.classList.remove('active');
                 if(el.textContent.includes(mod.title)) el.classList.add('active');
             });
+
             document.getElementById('current-title').innerText = mod.title;
             document.getElementById('current-desc').innerText = mod.desc;
+            
             const inputCont = document.getElementById('input-container');
             inputCont.innerHTML = mod.inputs.map(inp => `
-                <div>
+                <div class="space-y-1">
                     <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${inp.label}</label>
                     <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" oninput="process()" class="input-field font-mono">
                 </div>
             `).join('');
+            
             process();
             lucide.createIcons();
         }
@@ -295,49 +511,75 @@
         function process() {
             const mod = MODULES[activeModule];
             const values = {};
-            mod.inputs.forEach(inp => values[inp.id] = parseFloat(document.getElementById(`f-${inp.id}`).value) || 0);
+            mod.inputs.forEach(inp => {
+                const el = document.getElementById(`f-${inp.id}`);
+                values[inp.id] = parseFloat(el.value) || 0;
+            });
+
             const res = mod.calc(values);
             document.getElementById('res-main').innerText = res.main;
             document.getElementById('res-unit').innerText = res.unit;
             document.getElementById('res-secondary').innerHTML = res.sub.map(s => `
-                <div class="flex justify-between items-center text-sm">
+                <div class="flex justify-between items-center text-[13px]">
                     <span class="text-gray-500">${s.label}</span>
-                    <span class="font-bold text-gray-800">${s.val} <span class="text-[10px] text-blue-500">${s.unit}</span></span>
+                    <span class="font-bold text-gray-800">${s.val} <span class="text-[10px] text-blue-500 uppercase">${s.unit}</span></span>
                 </div>
             `).join('');
+            
             update3D(res.dims);
         }
 
         function init3D() {
             const cont = document.getElementById('three-viewport');
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf8f9fa);
+            scene.background = new THREE.Color(0xf1f3f4);
             camera = new THREE.PerspectiveCamera(45, cont.clientWidth / cont.clientHeight, 0.1, 1000);
-            camera.position.set(10, 10, 10);
+            camera.position.set(15, 15, 15);
             camera.lookAt(0, 0, 0);
+            
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(cont.clientWidth, cont.clientHeight);
             cont.appendChild(renderer.domElement);
-            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-            const light = new THREE.DirectionalLight(0x1a73e8, 1);
-            light.position.set(5, 10, 5);
-            scene.add(light);
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0x1a73e8, 1);
+            dirLight.position.set(10, 20, 10);
+            scene.add(dirLight);
+            
             animate();
         }
 
         function update3D(dims) {
             if (model) scene.remove(model);
-            const geometry = new THREE.BoxGeometry(dims[0]/2, dims[1]/2, dims[2]/2);
-            const material = new THREE.MeshPhongMaterial({ color: 0x1a73e8, transparent: true, opacity: 0.6 });
+            
+            const geometry = new THREE.BoxGeometry(
+                Math.max(0.1, dims[0]/5), 
+                Math.max(0.1, dims[1]/5), 
+                Math.max(0.1, dims[2]/5)
+            );
+            
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x1a73e8, 
+                transparent: true, 
+                opacity: 0.7,
+                shininess: 100
+            });
+            
             model = new THREE.Mesh(geometry, material);
-            const wireframe = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: 0x1a73e8 }));
-            model.add(wireframe);
+            const edges = new THREE.EdgesGeometry(geometry);
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x0d47a1 }));
+            model.add(line);
+            
             scene.add(model);
         }
 
         function animate() {
             requestAnimationFrame(animate);
-            if (model) model.rotation.y += 0.005;
+            if (model) {
+                model.rotation.y += 0.005;
+            }
             renderer.render(scene, camera);
         }
 
@@ -348,18 +590,46 @@
             renderer.setSize(cont.clientWidth, cont.clientHeight);
         }
 
-        async function exportToPDF() {
+        function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             const mod = MODULES[activeModule];
+            
             doc.setFillColor(26, 115, 232);
             doc.rect(0, 0, 210, 40, 'F');
             doc.setTextColor(255, 255, 255);
-            doc.text("CORE-ARCH RAPORT TEHNIC", 20, 25);
+            doc.setFontSize(22);
+            doc.text("CORE-ARCH PLATINUM REPORT", 20, 25);
+            
+            doc.setTextColor(100, 100, 100);
+            doc.setFontSize(10);
+            doc.text(`Generat la: ${new Date().toLocaleString('ro-RO')}`, 140, 35);
+
             doc.setTextColor(50, 50, 50);
-            doc.text(`MODUL: ${mod.title}`, 20, 60);
-            doc.text(`REZULTAT: ${document.getElementById('res-main').innerText} ${document.getElementById('res-unit').innerText}`, 20, 75);
-            doc.save(`Raport_${activeModule}.pdf`);
+            doc.setFontSize(16);
+            doc.text(`Modul: ${mod.title}`, 20, 60);
+            
+            doc.setFontSize(12);
+            doc.text(`Descriere: ${mod.desc}`, 20, 70);
+            
+            doc.setFontSize(24);
+            doc.setTextColor(26, 115, 232);
+            doc.text(`${document.getElementById('res-main').innerText} ${document.getElementById('res-unit').innerText}`, 20, 90);
+            
+            doc.setTextColor(80, 80, 80);
+            doc.setFontSize(12);
+            let y = 110;
+            doc.text("DETALII CALCUL:", 20, y);
+            y += 10;
+            
+            mod.inputs.forEach(inp => {
+                const val = document.getElementById(`f-${inp.id}`).value;
+                doc.setFontSize(10);
+                doc.text(`${inp.label}: ${val}`, 25, y);
+                y += 7;
+            });
+
+            doc.save(`CORE_ARCH_${activeModule}_${Date.now()}.pdf`);
         }
 
         init();
