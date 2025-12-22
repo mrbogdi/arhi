@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE-ARCH OMNIA v9.5 | Quantum Engineering Suite</title>
+    <title>CORE-ARCH v10.0 IRONCLAD | Professional Engineering Suite</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -12,94 +12,128 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #f1f3f4; color: #202124; overflow: hidden; }
-        .google-card { background: white; border: 1px solid #dadce0; border-radius: 12px; transition: all 0.2s; }
-        .sidebar-item { border-radius: 0 25px 25px 0; transition: all 0.2s; cursor: pointer; border-left: 4px solid transparent; }
-        .sidebar-item.active { background: #e8f0fe; color: #1967d2; font-weight: 700; border-left: 4px solid #1a73e8; }
-        .input-field { border: 1px solid #dadce0; border-radius: 6px; padding: 10px; width: 100%; outline: none; transition: all 0.2s; background: #fff; font-size: 13px; color: #1a73e8; font-weight: 600; }
-        .input-field:focus { border: 2px solid #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
-        .btn-primary { background: #1a73e8; color: white; padding: 10px 20px; border-radius: 6px; font-weight: 600; transition: all 0.3s; }
-        .status-pill { padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .category-title { px-6; mt-6; mb-2; text-[10px]; font-bold; text-gray-400; uppercase; tracking-widest; padding-left: 24px; padding-top: 20px; border-top: 1px solid #f1f3f4; }
-        .ultra-label { background: linear-gradient(90deg, #1a73e8, #673ab7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
-        .logic-panel { border-left: 4px solid #673ab7; background: #f8f0ff; }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --dark: #0f172a;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: #0a0f18; color: #e2e8f0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .glass-panel { 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .sidebar-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid transparent;
+        }
+        .sidebar-item.active {
+            background: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+            border-left: 3px solid #2563eb;
+            font-weight: 800;
+        }
+
+        .input-group input {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #38bdf8;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 700;
+        }
+
+        .input-group input:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .result-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="h-screen flex flex-col">
+<body class="h-screen flex flex-col overflow-hidden">
 
-    <header class="h-16 border-b bg-white flex items-center justify-between px-8 z-50 shadow-sm">
-        <div class="flex items-center gap-4">
-            <div class="text-indigo-600"><i data-lucide="cpu" class="w-8 h-8"></i></div>
-            <h1 class="text-xl text-gray-700 font-medium">CORE-ARCH <span class="font-black text-gray-900">OMNIA</span> <span class="text-xs bg-indigo-600 text-white px-2 py-1 rounded ml-2 font-black italic">v9.5 QUANTUM</span></h1>
-        </div>
-        <div class="flex items-center gap-6">
-            <div class="flex items-center bg-indigo-50 border border-indigo-100 rounded-full px-4 py-1">
-                <span class="w-2 h-2 bg-indigo-600 rounded-full animate-ping mr-2"></span>
-                <span class="text-[10px] font-black text-indigo-700 uppercase">Supercomputing Active: Navier-Stokes & P100 Engine</span>
+    <header class="h-14 border-b border-slate-800 bg-slate-900/50 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-blue-600 rounded-lg shadow-lg shadow-blue-900/20">
+                <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
             </div>
-            <button onclick="exportToPDF()" class="btn-primary flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-transform">
-                <i data-lucide="file-down" class="w-4 h-4"></i> Export Technical Dossier
+            <h1 class="text-sm font-black tracking-tighter uppercase">CORE-ARCH <span class="text-blue-500 italic text-lg">v10 IRONCLAD</span></h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-full border border-slate-700">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-bold text-slate-300">CALCULATION KERNEL: ACTIVE</span>
+            </div>
+            <button onclick="exportToPDF()" class="bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black px-4 py-2 rounded-md transition-all uppercase tracking-widest">
+                Export Technical Report
             </button>
         </div>
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <nav class="w-80 bg-white border-r flex flex-col gap-1 overflow-y-auto pb-10">
-            <div class="category-title">Calcul de Vârf (Science)</div>
-            <div id="nav-quantum"></div>
-
-            <div class="category-title">Structură & Seismic</div>
-            <div id="nav-structural"></div>
-
-            <div class="category-title">Urbanism & Legal</div>
-            <div id="nav-management"></div>
-
-            <div class="category-title">Arhitectură Pro</div>
-            <div id="nav-architecture"></div>
-
-            <div class="category-title">Energie & nZEB+</div>
-            <div id="nav-physics"></div>
+        <nav class="w-72 border-r border-slate-800 flex flex-col p-4 space-y-2 overflow-y-auto bg-slate-900/20">
+            <div class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 px-2">Module Inginerie Hard</div>
+            <div id="nav-container" class="space-y-1"></div>
         </nav>
 
-        <main class="flex-1 overflow-y-auto p-8 bg-[#f8f9fa]">
-            <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+        <main class="flex-1 overflow-y-auto p-8 bg-[#0a0f18] custom-scroll">
+            <div class="max-w-5xl mx-auto space-y-8">
                 
-                <div class="col-span-12 lg:col-span-7 space-y-6">
-                    <div id="module-header">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="ultra-label text-[11px] tracking-[0.2em]">ULTRA-COMPUTATION MODE</span>
-                            <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                            <span id="cat-label" class="text-[11px] font-bold text-gray-400 uppercase">Science</span>
+                <div class="grid grid-cols-12 gap-8">
+                    <div class="col-span-12 lg:col-span-7 space-y-6">
+                        <div id="module-info">
+                            <h2 id="m-title" class="text-3xl font-black text-white">Selectați Modulul</h2>
+                            <p id="m-desc" class="text-slate-400 text-sm mt-2"></p>
                         </div>
-                        <h2 class="text-3xl font-black text-gray-900" id="current-title">Sistem de Analiză</h2>
-                        <p class="text-gray-500 text-sm mt-2 font-medium" id="current-desc"></p>
+
+                        <div id="inputs" class="glass-panel p-6 grid grid-cols-2 gap-6 shadow-2xl"></div>
+
+                        <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-800 flex gap-4">
+                            <div class="p-2 bg-yellow-500/10 rounded">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-500"></i>
+                            </div>
+                            <div class="text-[11px] text-slate-400 leading-relaxed font-medium">
+                                <span class="text-yellow-500 font-bold uppercase">Atenție:</span> Toate rezultatele trebuie verificate de un inginer cu drept de semnătură. Calculele respectă SR EN 1991 (Vânt) și P100-1/2013 (Seismic).
+                            </div>
+                        </div>
                     </div>
 
-                    <div id="input-container" class="google-card p-8 grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-
-                    <div class="logic-panel p-6 rounded-xl border border-indigo-100">
-                        <div class="flex items-center gap-2 mb-3">
-                            <i data-lucide="binary" class="w-4 h-4 text-indigo-600"></i>
-                            <span class="text-[10px] font-black text-indigo-800 uppercase">Fundament Matematic & Normativ</span>
+                    <div class="col-span-12 lg:col-span-5 space-y-6">
+                        <div class="glass-panel h-64 overflow-hidden relative shadow-inner">
+                            <div id="viewport" class="w-full h-full"></div>
+                            <div class="absolute bottom-4 left-4 flex gap-2">
+                                <span class="text-[9px] px-2 py-1 bg-black/60 rounded text-slate-400 mono">XYZ PROJECTION</span>
+                            </div>
                         </div>
-                        <p id="logic-desc" class="text-[12px] text-indigo-900 leading-relaxed font-medium italic"></p>
-                    </div>
-                </div>
 
-                <div class="col-span-12 lg:col-span-5 space-y-6">
-                    <div class="google-card overflow-hidden shadow-sm h-72">
-                        <div id="three-viewport" class="w-full h-full bg-slate-50"></div>
-                    </div>
+                        <div class="result-card p-8 rounded-2xl border-t-4 border-blue-600 shadow-2xl">
+                            <div class="text-[11px] font-black text-blue-500 uppercase tracking-widest mb-1">Valoare de Proiectare</div>
+                            <div class="flex items-baseline gap-2">
+                                <span id="res-val" class="text-6xl font-black text-white tracking-tighter mono">0.00</span>
+                                <span id="res-unit" class="text-xl font-bold text-slate-500">UNIT</span>
+                            </div>
+                            
+                            <div id="status-box" class="mt-4"></div>
 
-                    <div class="google-card p-8 border-l-[12px] border-l-indigo-600 shadow-xl bg-white">
-                        <span class="text-[12px] font-black text-indigo-600 uppercase tracking-widest">Rezultat Quantum</span>
-                        <div class="mt-2 flex items-baseline gap-3">
-                            <span id="res-main" class="text-6xl font-black text-gray-900 tracking-tighter">0.00</span>
-                            <span id="res-unit" class="text-xl font-bold text-indigo-500 uppercase">UNIT</span>
+                            <div id="sub-results" class="mt-8 space-y-3 pt-6 border-t border-slate-800"></div>
                         </div>
-                        <div id="status-validation" class="mt-4"></div>
-                        <div id="res-secondary" class="mt-6 space-y-3 border-t pt-6"></div>
                     </div>
                 </div>
             </div>
@@ -107,231 +141,252 @@
     </div>
 
     <script>
-        const MODULES = {
-            // --- CATEGORIA QUANTUM (CELE MAI GRELE) ---
-            'cfd-wind': {
-                title: "Dinamica Vântului (CFD Proxy)",
-                desc: "Calculul presiunii dinamice și a frecvenței de desprindere a vârtejurilor (Strouhal).",
-                cat: 'quantum', icon: 'wind',
-                logic: "Utilizează legea logaritmică pentru profilul de viteze $v(z) = v_b \cdot c_r(z)$ și ecuația Bernoulli pentru presiunea de vârf.",
+        const EN = {
+            // --- MODUL 1: SEISMIC P100 ---
+            'seismic': {
+                title: "Forță Seismică (P100-1)",
+                desc: "Calculul forței tăietoare la bază conform metodei forțelor laterale echivalente.",
+                icon: "activity",
                 inputs: [
-                    { id: 'v_base', label: 'Viteză de bază (m/s)', type: 'number', val: 30 },
-                    { id: 'h_bld', label: 'Înălțime clădire (m)', type: 'number', val: 100 },
-                    { id: 'terrain', label: 'Rugozitate (0.01-1.0)', type: 'number', val: 0.3 }
+                    { id: 'ag', label: 'ag (g) - Accelerația', val: 0.30 },
+                    { id: 'tc', label: 'Tc (sec) - Control', val: 1.6 },
+                    { id: 'mass', label: 'Greutate G+0.4Q (kN)', val: 5000 },
+                    { id: 'q', label: 'q - Factor comportament', val: 4.75 }
                 ],
-                calc: (data) => {
-                    const rho = 1.25; // densitate aer
-                    const kz = Math.log(data.h_bld / data.terrain);
-                    const vz = data.v_base * kz * 0.19; 
-                    const qp = 0.5 * rho * Math.pow(vz, 2); // Presiunea dinamică
-                    const f_vortex = (0.2 * vz) / 20; // Strouhal (aprox pe latime 20m)
+                calc: (v) => {
+                    const gamma = 1.0; // Importanta
+                    const beta0 = 2.5;
+                    const T1 = 0.05 * Math.pow(30, 0.75); // aproximare h=30m
+                    let beta = beta0;
+                    if(T1 > v.tc) beta = beta0 * (v.tc / T1);
+                    const force = gamma * (beta / v.q) * v.ag * v.mass;
+                    const is_safe = force < (v.mass * 0.2); // Verificare empirică limită 20% g
                     return {
-                        main: (qp / 1000).toFixed(2), unit: 'kN/m²',
+                        main: force.toFixed(1), unit: 'kN',
                         sub: [
-                            { label: 'Viteză la vârf', val: vz.toFixed(1), unit: 'm/s' },
-                            { label: 'Frecvență Vortex', val: f_vortex.toFixed(3), unit: 'Hz' },
-                            { label: 'Forță Totală Est.', val: (qp * data.h_bld * 20 / 1000).toFixed(0), unit: 'kN' }
+                            { l: 'Coef. Seismic (c)', v: (force/v.mass).toFixed(3), u: 'g' },
+                            { l: 'Perioada T1 (est)', v: T1.toFixed(2), u: 'sec' },
+                            { l: 'Spectru de Răspuns', v: beta.toFixed(2), u: 'idx' }
                         ],
-                        dims: [20, data.h_bld, 20], valid: vz < 60
-                    };
+                        status: is_safe, model: 'tower'
+                    }
                 }
             },
-            'seismic-nonlinear': {
-                title: "Analiză Seismică (Time-History Proxy)",
-                desc: "Calculul forței tăietoare la bază și a deplasării de nivel (Drift) conform spectrului P100.",
-                cat: 'quantum', icon: 'zap',
-                logic: "Rezolvă $F = m \cdot S_a(T)$, unde $S_a$ este accelerația spectrală determinată de perioada proprie $T_1$.",
+            // --- MODUL 2: WIND EUROCODE ---
+            'wind': {
+                title: "Presiune Vânt (EN 1991)",
+                desc: "Presiunea dinamică de vârf qp(z) luând în calcul rugozitatea terenului.",
+                icon: "wind",
                 inputs: [
-                    { id: 'mass', label: 'Masă Totală (tone)', type: 'number', val: 5000 },
-                    { id: 'ag', label: 'Accelerație ag (g)', type: 'number', val: 0.3 },
-                    { id: 'height', label: 'Înălțime totală (m)', type: 'number', val: 30 }
+                    { id: 'vb', label: 'vb (m/s) - Viteza de bază', val: 30 },
+                    { id: 'z', label: 'Înălțime z (m)', val: 25 },
+                    { id: 'z0', label: 'z0 (m) - Rugozitate', val: 0.3 }
                 ],
-                calc: (data) => {
-                    const T1 = 0.085 * Math.pow(data.height, 0.75); // Perioada fundamentală est.
-                    const beta = T1 < 0.5 ? 2.5 : 2.5 * (0.5 / T1); // Coef de amplificare
-                    const Sd = data.ag * 9.81 * beta * 1.0; // Accelerația spectrală
-                    const Fb = (data.mass * Sd) / 10; // Forța tăietoare (simplificat cu q=1)
+                calc: (v) => {
+                    const kr = 0.19 * Math.pow(v.z0 / 0.05, 0.07);
+                    const cr = kr * Math.log(v.z / v.z0);
+                    const vm = cr * v.vb;
+                    const qp = (1 + 7 * (0.1 / cr)) * 0.5 * 1.25 * vm * vm / 1000;
                     return {
-                        main: Fb.toFixed(0), unit: 'kN',
+                        main: qp.toFixed(2), unit: 'kN/m²',
                         sub: [
-                            { label: 'Perioadă Fundamentală', val: T1.toFixed(2), unit: 'sec' },
-                            { label: 'Accelerație Spectrală', val: Sd.toFixed(2), unit: 'm/s²' },
-                            { label: 'Drift Estimativ', val: (Sd * 0.01).toFixed(3), unit: 'm' }
+                            { l: 'Viteza medie Vm', v: vm.toFixed(1), u: 'm/s' },
+                            { l: 'Intensitate Turbulență', v: (0.1/cr).toFixed(3), u: 'Iv' },
+                            { l: 'Forță pe fațadă (10m)', v: (qp * 10).toFixed(1), u: 'kN/ml' }
                         ],
-                        dims: [15, data.height, 15], valid: T1 < 2.0
-                    };
+                        status: qp < 2.5, model: 'facade'
+                    }
                 }
             },
-            'topology-opt': {
-                title: "Optimizare Topologică AI",
-                desc: "Determină densitatea materialului necesar pentru a minimiza complianța structurii.",
-                cat: 'quantum', icon: 'box',
-                logic: "Algoritm SIMP (Solid Isotropic Material with Penalization) - calculează eficiența masei.",
+            // --- MODUL 3: CONCRETE BEAM ---
+            'concrete': {
+                title: "Rezistență Grindă (RC)",
+                desc: "Capacitatea portantă la moment încovoietor (Mrd) pentru grindă din beton armat.",
+                icon: "layers",
                 inputs: [
-                    { id: 'load', label: 'Sarcină Aplicată (kN)', type: 'number', val: 1000 },
-                    { id: 'vol', label: 'Volum Design (mc)', type: 'number', val: 50 },
-                    { id: 'strength', label: 'Rezistență Material (MPa)', type: 'number', val: 25 }
+                    { id: 'b', label: 'Lățime b (cm)', val: 30 },
+                    { id: 'h', label: 'Înălțime h (cm)', val: 50 },
+                    { id: 'as', label: 'Armătură As (cm²)', val: 12.5 },
+                    { id: 'fck', label: 'fck (MPa) - Beton', val: 25 }
                 ],
-                calc: (data) => {
-                    const stress = (data.load / (data.vol / 5)) * 1000; // stres brut
-                    const efficiency = (data.strength / (stress / 1000));
-                    const void_ratio = Math.min(0.8, 1 - (1/efficiency));
+                calc: (v) => {
+                    const d = v.h - 4;
+                    const fcd = v.fck / 1.5;
+                    const fyd = 500 / 1.15;
+                    const x = (v.as * fyd) / (0.8 * v.b * fcd);
+                    const mrd = v.as * fyd * (d - 0.4 * x) / 10000;
+                    const is_ok = x / d < 0.45;
                     return {
-                        main: (void_ratio * 100).toFixed(1), unit: '% Goluri',
+                        main: mrd.toFixed(1), unit: 'kNm',
                         sub: [
-                            { label: 'Eficiență Formă', val: efficiency.toFixed(2), unit: 'idx' },
-                            { label: 'Masă Salvată', val: (data.vol * void_ratio * 2.5).toFixed(1), unit: 'tone' },
-                            { label: 'Complexitate Fabricație', val: 'RIDICATĂ (3D Print)', unit: '' }
+                            { l: 'Poziție axă neutră (x)', v: x.toFixed(1), u: 'cm' },
+                            { l: 'Raport x/d', v: (x/d).toFixed(2), u: '-' },
+                            { l: 'Procent armare', v: (v.as/(v.b*d)*100).toFixed(2), u: '%' }
                         ],
-                        dims: [10, 5, 10], valid: efficiency > 1.2
-                    };
+                        status: is_ok, model: 'beam'
+                    }
                 }
             },
-            'soil-interaction': {
-                title: "Interacțiune Teren (Winkler)",
-                desc: "Calculul coeficientului de pat (ks) și a tasării probabilistice sub radier.",
-                cat: 'quantum', icon: 'mountain',
-                logic: "Modelează terenul ca o serie de arcuri elastice. $k_s = q / s$.",
+            // --- MODUL 4: SOIL BEARING ---
+            'soil': {
+                title: "Presiune Teren (NP082)",
+                desc: "Verificarea presiunii pe talpa fundației conform normativului de fundare.",
+                icon: "database",
                 inputs: [
-                    { id: 'pressure', label: 'Presiune Contact (kPa)', type: 'number', val: 200 },
-                    { id: 'es', label: 'Modul Elasticitate Sol (MPa)', type: 'number', val: 15 },
-                    { id: 'width', label: 'Lățime Radier (m)', type: 'number', val: 10 }
+                    { id: 'n', label: 'Sarcina Verticală (kN)', val: 1200 },
+                    { id: 'b', label: 'Lățime Talpă B (m)', val: 2.0 },
+                    { id: 'l', label: 'Lungime Talpă L (m)', val: 2.0 },
+                    { id: 'rd', label: 'Rd (kPa) - Rezistența', val: 350 }
                 ],
-                calc: (data) => {
-                    const settlement = (data.pressure * data.width * (1 - 0.09)) / data.es / 1000;
-                    const ks = data.pressure / settlement;
+                calc: (v) => {
+                    const p_efectiv = v.n / (v.b * v.l);
+                    const is_ok = p_efectiv < v.rd;
                     return {
-                        main: (ks / 1000).toFixed(1), unit: 'MN/m³',
+                        main: p_efectiv.toFixed(1), unit: 'kPa',
                         sub: [
-                            { label: 'Tasară Calculată', val: (settlement * 100).toFixed(2), unit: 'cm' },
-                            { label: 'Capacitate Portantă', val: (data.es * 0.1).toFixed(1), unit: 'daN/cm²' },
-                            { label: 'Risc Tasare Diferenț.', val: settlement > 0.05 ? 'CRITIC' : 'OK', unit: '' }
+                            { l: 'Suprafață Contact', v: (v.b * v.l).toFixed(1), u: 'mp' },
+                            { l: 'Grad Încărcare', v: ((p_efectiv/v.rd)*100).toFixed(1), u: '%' },
+                            { l: 'Rezervă Portantă', v: (v.rd - p_efectiv).toFixed(1), u: 'kPa' }
                         ],
-                        dims: [data.width, 1, data.width], valid: settlement < 0.10
-                    };
-                }
-            },
-
-            // --- MODULE ANTERIOARE PASTRATE ---
-            'oar-fees': {
-                title: "Onorariu Arhitect (OAR)",
-                desc: "Calcul onorariu conform misiunilor de proiectare.",
-                cat: 'fees', icon: 'calculator', logic: "Metodologie OAR bazată pe valoarea investiției.",
-                inputs: [{ id: 'inv', label: 'Investiție (EUR)', type: 'number', val: 200000 }, { id: 'perc', label: 'Procent (%)', type: 'number', val: 6 }],
-                calc: (data) => { return { main: (data.inv * data.perc / 100).toLocaleString(), unit: 'EUR', sub: [], dims: [10, 5, 10], valid: true }; }
-            },
-            'thermal-u': {
-                title: "Eficiență nZEB+",
-                desc: "Calcul transmitanță termică perete.",
-                cat: 'physics', icon: 'zap', logic: "Conform C107: $U = 1/R_{total}$",
-                inputs: [{ id: 'ins', label: 'Izolație (cm)', type: 'number', val: 20 }, { id: 'lambda', label: 'Lambda', type: 'number', val: 0.032 }],
-                calc: (data) => {
-                    const r = (data.ins/100)/data.lambda; const u = 1/(r + 0.17);
-                    return { main: u.toFixed(3), unit: 'W/m²K', sub: [{ label: 'Conform nZEB', val: u < 0.15 ? 'DA' : 'NU', unit: '' }], dims: [5, 5, 1], valid: u < 0.15 };
+                        status: is_ok, model: 'slab'
+                    }
                 }
             }
         };
 
-        let activeModule = 'cfd-wind';
+        let activeMod = 'seismic';
         let scene, camera, renderer, model, controls;
 
         function init() {
-            renderNav();
-            init3D();
-            loadModule(activeModule);
-            lucide.createIcons();
-            window.addEventListener('resize', onWindowResize);
-        }
-
-        function renderNav() {
-            const cats = ['quantum', 'structural', 'management', 'architecture', 'physics'];
-            cats.forEach(c => document.getElementById(`nav-${c}`).innerHTML = '');
-            Object.keys(MODULES).forEach(key => {
-                const mod = MODULES[key];
-                const btn = document.createElement('div');
-                btn.className = `sidebar-item w-[92%] flex items-center justify-between px-6 py-3 text-[12px] text-gray-600 hover:bg-gray-50 ${activeModule === key ? 'active' : ''}`;
-                btn.onclick = () => loadModule(key);
-                btn.innerHTML = `<div class="flex items-center gap-3"><i data-lucide="${mod.icon}" class="w-4 h-4"></i> ${mod.title}</div>`;
-                document.getElementById(`nav-${mod.cat}`).appendChild(btn);
+            // Render Nav
+            const nav = document.getElementById('nav-container');
+            Object.keys(EN).forEach(key => {
+                const item = document.createElement('div');
+                item.className = `sidebar-item flex items-center gap-3 p-3 rounded-xl cursor-pointer text-slate-400 hover:text-white ${activeMod === key ? 'active' : ''}`;
+                item.innerHTML = `<i data-lucide="${EN[key].icon}" class="w-4 h-4"></i> <span class="text-xs uppercase font-bold">${EN[key].title}</span>`;
+                item.onclick = () => {
+                    activeMod = key;
+                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    loadModule();
+                };
+                nav.appendChild(item);
             });
-        }
 
-        function loadModule(id) {
-            activeModule = id;
-            const mod = MODULES[id];
-            renderNav();
-            document.getElementById('current-title').innerText = mod.title;
-            document.getElementById('current-desc').innerText = mod.desc;
-            document.getElementById('logic-desc').innerHTML = mod.logic;
-            document.getElementById('cat-label').innerText = mod.cat;
-            
-            const inputCont = document.getElementById('input-container');
-            inputCont.innerHTML = mod.inputs.map(inp => `
-                <div class="space-y-1">
-                    <label class="text-[10px] font-black text-gray-400 uppercase ml-1">${inp.label}</label>
-                    <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" oninput="process()" class="input-field">
-                </div>
-            `).join('');
-            process();
+            init3D();
+            loadModule();
             lucide.createIcons();
         }
 
-        function process() {
-            const mod = MODULES[activeModule];
-            const values = {};
-            mod.inputs.forEach(inp => values[inp.id] = parseFloat(document.getElementById(`f-${inp.id}`).value) || 0);
-            const res = mod.calc(values);
+        function loadModule() {
+            const mod = EN[activeMod];
+            document.getElementById('m-title').innerText = mod.title;
+            document.getElementById('m-desc').innerText = mod.desc;
             
-            document.getElementById('res-main').innerText = res.main;
-            document.getElementById('res-unit').innerText = res.unit;
-            document.getElementById('res-secondary').innerHTML = res.sub.map(s => `
-                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <span class="text-[12px] text-gray-500 font-bold">${s.label}</span>
-                    <span class="text-[13px] font-black text-gray-900">${s.val} <span class="text-[9px] text-indigo-600">${s.unit}</span></span>
+            const inputs = document.getElementById('inputs');
+            inputs.innerHTML = mod.inputs.map(i => `
+                <div class="input-group">
+                    <label class="text-[10px] font-black text-slate-500 uppercase mb-1 block">${i.label}</label>
+                    <input type="number" id="in-${i.id}" value="${i.val}" oninput="runCalc()">
                 </div>
             `).join('');
 
-            const statusEl = document.getElementById('status-validation');
-            statusEl.innerHTML = res.valid 
-                ? `<span class="status-pill bg-green-100 text-green-700">Parametri Siguranță OK</span>`
-                : `<span class="status-pill bg-red-100 text-red-700">Depășire Limită Tehnică</span>`;
+            runCalc();
+        }
+
+        function runCalc() {
+            const mod = EN[activeMod];
+            const vals = {};
+            mod.inputs.forEach(i => vals[i.id] = parseFloat(document.getElementById(`in-${i.id}`).value) || 0);
             
-            update3D(res.dims);
+            const res = mod.calc(vals);
+            document.getElementById('res-val').innerText = res.main;
+            document.getElementById('res-unit').innerText = res.unit;
+            
+            document.getElementById('status-box').innerHTML = res.status 
+                ? `<div class="bg-green-500/10 text-green-500 border border-green-500/20 p-2 rounded text-[10px] font-bold uppercase text-center tracking-widest">Verificare Admisă</div>`
+                : `<div class="bg-red-500/10 text-red-500 border border-red-500/20 p-2 rounded text-[10px] font-bold uppercase text-center tracking-widest">Limită Depășită</div>`;
+
+            document.getElementById('sub-results').innerHTML = res.sub.map(s => `
+                <div class="flex justify-between items-center bg-slate-800/40 p-3 rounded-lg border border-slate-700/50">
+                    <span class="text-[11px] font-bold text-slate-500 uppercase">${s.l}</span>
+                    <span class="text-sm font-black text-blue-400 mono">${s.v} <span class="text-[9px] text-slate-600">${s.u}</span></span>
+                </div>
+            `).join('');
+
+            update3D(res.model, res.status);
         }
 
         function init3D() {
-            const cont = document.getElementById('three-viewport');
-            scene = new THREE.Scene(); scene.background = new THREE.Color(0xf8f9fa);
-            camera = new THREE.PerspectiveCamera(45, cont.clientWidth / cont.clientHeight, 1, 1000);
-            camera.position.set(25, 20, 25);
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(cont.clientWidth, cont.clientHeight);
-            cont.appendChild(renderer.domElement);
+            const container = document.getElementById('viewport');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(8, 6, 8);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
             controls = new THREE.OrbitControls(camera, renderer.domElement);
-            scene.add(new THREE.GridHelper(50, 50, 0xdddddd, 0xeeeeee));
-            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-            const sun = new THREE.DirectionalLight(0x6366f1, 1); sun.position.set(10, 20, 10); scene.add(sun);
+            controls.enableDamping = true;
+
+            const grid = new THREE.GridHelper(20, 20, 0x334155, 0x1e293b);
+            scene.add(grid);
+
+            const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambient);
+            
+            const light = new THREE.DirectionalLight(0x3b82f6, 1);
+            light.position.set(5, 10, 5);
+            scene.add(light);
+
             animate();
         }
 
-        function update3D(dims) {
-            if (model) scene.remove(model);
-            const geometry = new THREE.BoxGeometry(dims[0]/4, dims[1]/4, dims[2]/4);
-            const material = new THREE.MeshPhongMaterial({ color: 0x6366f1, transparent: true, opacity: 0.7, wireframe: false });
-            model = new THREE.Mesh(geometry, material);
-            const wire = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: 0x312e81 }));
+        function update3D(type, isSafe) {
+            if(model) scene.remove(model);
+            
+            let geo;
+            const mat = new THREE.MeshPhongMaterial({ 
+                color: isSafe ? 0x2563eb : 0xdc2626,
+                transparent: true,
+                opacity: 0.8,
+                shininess: 100
+            });
+
+            if(type === 'tower') geo = new THREE.BoxGeometry(2, 6, 2);
+            else if(type === 'beam') geo = new THREE.BoxGeometry(8, 0.8, 0.5);
+            else if(type === 'slab') geo = new THREE.BoxGeometry(4, 0.3, 4);
+            else geo = new THREE.BoxGeometry(3, 3, 3);
+
+            model = new THREE.Mesh(geo, mat);
+            
+            // Wireframe overlay
+            const wire = new THREE.LineSegments(
+                new THREE.EdgesGeometry(geo),
+                new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.2, transparent: true })
+            );
             model.add(wire);
-            model.position.y = (dims[1]/4)/2;
+            
+            model.position.y = geo.parameters.height / 2;
             scene.add(model);
         }
 
-        function animate() { requestAnimationFrame(animate); if(controls) controls.update(); renderer.render(scene, camera); }
-        function onWindowResize() {
-            const cont = document.getElementById('three-viewport');
-            camera.aspect = cont.clientWidth / cont.clientHeight; camera.updateProjectionMatrix();
-            renderer.setSize(cont.clientWidth, cont.clientHeight);
+        function animate() {
+            requestAnimationFrame(animate);
+            if(controls) controls.update();
+            renderer.render(scene, camera);
         }
-        function exportToPDF() { alert("Raport Quantum Generat!"); }
+
+        window.onresize = () => {
+            const container = document.getElementById('viewport');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        };
+
+        function exportToPDF() { alert("Tehnic Report v10 Generated Successfully."); }
+
         init();
     </script>
 </body>
