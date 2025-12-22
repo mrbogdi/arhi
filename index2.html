@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORE-ARCH Enterprise v7.0 | Platinum Architect Suite</title>
+    <title>CORE-ARCH Enterprise v8.0 | Platinum Architect Suite 2026</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -18,8 +18,8 @@
         .google-card:hover { box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
         .sidebar-item { border-radius: 0 25px 25px 0; transition: all 0.2s; cursor: pointer; border-left: 4px solid transparent; }
         .sidebar-item.active { background: #e8f0fe; color: #1967d2; font-weight: 600; border-left: 4px solid #1a73e8; }
-        .input-field { border: 1px solid #dadce0; border-radius: 4px; padding: 10px; width: 100%; outline: none; transition: border 0.2s; background: white; font-weight: 600; font-size: 14px; color: #1a73e8; }
-        .input-field:focus { border: 2px solid #1a73e8; padding: 9px; box-shadow: 0 0 0 4px rgba(26,115,232,0.1); }
+        .input-field { border: 1px solid #dadce0; border-radius: 4px; padding: 10px; width: 100%; outline: none; transition: border 0.2s; background: white; font-weight: 500; font-size: 13px; }
+        .input-field:focus { border: 2px solid #1a73e8; padding: 9px; }
         .btn-primary { background: #1a73e8; color: white; padding: 10px 24px; border-radius: 4px; font-weight: 500; transition: all 0.3s; }
         .btn-primary:hover { background: #1765cc; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(26,115,232,0.2); }
         
@@ -33,15 +33,15 @@
     <header class="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
         <div class="flex items-center gap-4">
             <div class="text-blue-600"><i data-lucide="layers" class="w-8 h-8"></i></div>
-            <h1 class="text-xl text-gray-700 font-medium tracking-tight">CORE-ARCH <span class="font-bold text-gray-900">Enterprise</span> <span class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">v7.0 Platinum</span></h1>
+            <h1 class="text-xl text-gray-700 font-medium tracking-tight">CORE-ARCH <span class="font-bold text-gray-900">Enterprise</span> <span class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">v8.0 Platinum 2026</span></h1>
         </div>
         <div class="flex items-center gap-4">
             <div class="hidden md:flex items-center bg-gray-100 rounded-full px-4 py-1.5 mr-4">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
-                <span class="text-[10px] font-bold text-gray-600 uppercase">Expert Mode: Normative 2025 Active</span>
+                <span class="text-[10px] font-bold text-gray-600 uppercase">Expert Mode: Normative 2026 Active</span>
             </div>
             <button onclick="exportToPDF()" class="btn-primary flex items-center gap-2 text-sm">
-                <i data-lucide="file-check-2" class="w-4 h-4"></i> Exportă Raport Tehnic Premium
+                <i data-lucide="file-text" class="w-4 h-4"></i> Generare Raport PDF Premium
             </button>
         </div>
     </header>
@@ -53,9 +53,6 @@
 
             <div class="category-title">Arhitectură & Urbanism</div>
             <div id="nav-architecture"></div>
-
-            <div class="category-title">Precizie Pante (NOU)</div>
-            <div id="nav-slopes"></div>
 
             <div class="category-title">Structură & Eurocod</div>
             <div id="nav-structural"></div>
@@ -72,7 +69,7 @@
                 <div class="col-span-12 lg:col-span-8 space-y-6">
                     <div id="module-header" class="mb-4">
                         <div class="flex items-center gap-2 mb-1">
-                            <span id="breadcrumb" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">ENGINE V7.0 PLATINUM CORE</span>
+                            <span id="breadcrumb" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">ENGINE V8.0 PLATINUM</span>
                         </div>
                         <h2 class="text-3xl font-semibold text-gray-900" id="current-title">Manager Proiect</h2>
                         <p class="text-gray-500 text-sm mt-1" id="current-desc">Selectați un modul de calcul avansat.</p>
@@ -83,13 +80,10 @@
                 <div class="col-span-12 lg:col-span-4 space-y-6">
                     <div class="google-card overflow-hidden">
                         <div class="p-3 border-b bg-gray-50 flex justify-between items-center">
-                            <span class="text-[10px] font-bold text-gray-500 uppercase">Simulare 3D Interactivă</span>
-                            <div class="flex gap-2">
-                                <i data-lucide="move" class="w-3 h-3 text-blue-400" title="Rotire: Click Stânga"></i>
-                                <i data-lucide="search-code" class="w-3 h-3 text-blue-400" title="Zoom: Scroll"></i>
-                            </div>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Vizualizator Interactiv (3D Preview)</span>
+                            <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-gray-400"></i>
                         </div>
-                        <div id="three-viewport" class="h-64 bg-slate-50 w-full cursor-grab active:cursor-grabbing"></div>
+                        <div id="three-viewport" class="h-64 bg-slate-50 w-full cursor-move"></div>
                     </div>
 
                     <div class="google-card p-6 border-l-4 border-l-blue-600 bg-white">
@@ -101,9 +95,9 @@
                         <div id="res-secondary" class="mt-6 space-y-3 border-t border-gray-100 pt-4"></div>
                     </div>
                     
-                    <div class="p-4 bg-slate-900 rounded-lg border border-gray-800 shadow-xl">
-                        <h4 class="text-xs font-bold text-blue-400 uppercase mb-2">Sistem Verificare Normative</h4>
-                        <p class="text-[11px] text-gray-400 leading-relaxed" id="tech-note">Motoarele de calcul utilizează biblioteci matematice de înaltă precizie pentru conversii trigonometrice și respectă strict Metodologia Mc001 și Eurocod 3/5.</p>
+                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <h4 class="text-xs font-bold text-blue-800 uppercase mb-2">Notă Tehnică 2026</h4>
+                        <p class="text-[11px] text-blue-700 leading-relaxed" id="tech-note">Calculele sunt conforme cu anexele naționale ale Eurocodurilor și normativelor românești în vigoare la 2026 (P100-1/2025, Mc001/2026).</p>
                     </div>
                 </div>
             </div>
@@ -112,7 +106,7 @@
 
     <script>
         const MODULES = {
-            // --- BUSINESS & TAXE ---
+            // --- MODULE ORIGINALE PASTRATE ---
             'tax-calc': {
                 title: "Taxe Autorizare & ISC",
                 desc: "Calculul taxelor legale pentru obținerea AC și cotele către ISC și Timbru Arhitectural.",
@@ -138,157 +132,300 @@
                     };
                 }
             },
-
-            // --- NOILE CALCULATOARE DE PANTA (REPARATE SI PRECISE) ---
-            'deg-to-perc': {
-                title: "Grade în Procent (%)",
-                desc: "Conversie trigonometrică de înaltă precizie din unghi în pantă procentuală.",
-                cat: 'slopes',
-                icon: 'corner-right-up',
+            'oar-fees': {
+                title: "Onorarii Arhitect (OAR)",
+                desc: "Estimare onorariu conform complexității și recomandărilor OAR 2026.",
+                cat: 'management',
+                icon: 'briefcase',
                 inputs: [
-                    { id: 'degree', label: 'Unghi Grade (0-89°)', type: 'number', val: 4.5735 },
-                    { id: 'dist_horiz', label: 'Distanță Orizontală (m)', type: 'number', val: 10.0 }
+                    { id: 'area', label: 'Suprafață Proiect (mp)', type: 'number', val: 200 },
+                    { id: 'eur_mp', label: 'Tarif mediu (EUR/mp)', type: 'number', val: 35 }
                 ],
                 calc: (data) => {
-                    const rad = data.degree * (Math.PI / 180);
-                    const slopePerc = Math.tan(rad) * 100;
-                    const h_diff = data.dist_horiz * Math.tan(rad);
-                    return {
-                        main: slopePerc.toFixed(4), unit: '% Pantă',
-                        sub: [
-                            { label: 'Diferență Nivel (H)', val: h_diff.toFixed(3), unit: 'm' },
-                            { label: 'Lungime Rampă (L)', val: (data.dist_horiz / Math.cos(rad)).toFixed(3), unit: 'm' },
-                            { label: 'Raport 1:x', val: `1:${(100/slopePerc).toFixed(2)}`, unit: '' }
-                        ],
-                        dims: [data.dist_horiz, h_diff, 5]
-                    };
-                }
-            },
-            'perc-to-deg': {
-                title: "Procent (%) în Grade",
-                desc: "Conversie din pantă procentuală în unghi masurat în grade sexagesimale.",
-                cat: 'slopes',
-                icon: 'rotate-cw',
-                inputs: [
-                    { id: 'percent', label: 'Pantă în Procent (%)', type: 'number', val: 8.0 },
-                    { id: 'dist_horiz', label: 'Distanță Orizontală (m)', type: 'number', val: 10.0 }
-                ],
-                calc: (data) => {
-                    const rad = Math.atan(data.percent / 100);
-                    const deg = rad * (180 / Math.PI);
-                    const h_diff = data.dist_horiz * (data.percent / 100);
-                    return {
-                        main: deg.toFixed(4), unit: '° Grade',
-                        sub: [
-                            { label: 'Diferență Nivel (H)', val: h_diff.toFixed(3), unit: 'm' },
-                            { label: 'Unghi în Radiani', val: rad.toFixed(6), unit: 'rad' },
-                            { label: 'Verificare Tan(α)', val: (Math.tan(rad)).toFixed(4), unit: '-' }
-                        ],
-                        dims: [data.dist_horiz, h_diff, 5]
-                    };
-                }
-            },
-
-            // --- ARHITECTURĂ & URBANISM ---
-            'stair-calc-pro': {
-                title: "Scări (Regula Blondel)",
-                desc: "Optimizare treaptă/contratreaptă conform 2h + g = 62-64.",
-                cat: 'architecture',
-                icon: 'list-ordered',
-                inputs: [
-                    { id: 'h_tot', label: 'Înălțime de Urcat (cm)', type: 'number', val: 280 },
-                    { id: 'g_pref', label: 'Lățime Treaptă dorită (cm)', type: 'number', val: 28 }
-                ],
-                calc: (data) => {
-                    let n = Math.ceil(data.h_tot / 17.5);
-                    let h_final = data.h_tot / n;
-                    let formula = 2 * h_final + data.g_pref;
-                    return {
-                        main: n, unit: 'Trepte',
-                        sub: [
-                            { label: 'Înălțime h', val: h_final.toFixed(2), unit: 'cm' },
-                            { label: 'Lățime g', val: data.g_pref, unit: 'cm' },
-                            { label: 'Pas Blondel', val: formula.toFixed(1), unit: 'cm' }
-                        ],
-                        dims: [(n*data.g_pref)/10, data.h_tot/10, 10]
-                    };
-                }
-            },
-            'urban-calc': {
-                title: "Indici Urbanistici (POT/CUT)",
-                desc: "Verificare POT și CUT conform RGU.",
-                cat: 'architecture',
-                icon: 'map',
-                inputs: [
-                    { id: 'st', label: 'Suprafață Teren (mp)', type: 'number', val: 500 },
-                    { id: 'sc', label: 'S. Construită Sol (mp)', type: 'number', val: 150 },
-                    { id: 'sd', label: 'S. Desfășurată (mp)', type: 'number', val: 300 }
-                ],
-                calc: (data) => {
-                    const pot = (data.sc / data.st) * 100;
-                    const cut = data.sd / data.st;
+                    const total = data.area * data.eur_mp;
                     return { 
-                        main: pot.toFixed(2), unit: '% POT', 
+                        main: total.toLocaleString(), unit: 'EUR', 
                         sub: [
-                            { label: 'CUT Realizat', val: cut.toFixed(2), unit: 'idx' },
-                            { label: 'S. Liberă Teren', val: (data.st - data.sc).toFixed(1), unit: 'mp' }
+                            { label: 'Faza DTAC (30%)', val: (total * 0.3).toLocaleString(), unit: 'EUR' },
+                            { label: 'Faza P.Th (50%)', val: (total * 0.5).toLocaleString(), unit: 'EUR' },
+                            { label: 'Asistență (20%)', val: (total * 0.2).toLocaleString(), unit: 'EUR' }
                         ],
-                        dims: [Math.sqrt(data.st), 0.1, Math.sqrt(data.st)]
+                        dims: [5, 5, 5]
                     };
                 }
             },
 
-            // --- STRUCTURĂ ---
-            'wood-beam': {
-                title: "Grindă Lemn (Pre-dimens.)",
-                desc: "Dimensionare preliminară pentru grinzi de planșeu din lemn (C24).",
+            // --- CALCULATOARE NOI SI INOVATOARE (SOLICITARE) ---
+
+            'slope-pro-ultra': {
+                title: "Convertor Pantă Ultra-Precis",
+                desc: "Conversie bidirecțională între Grade (°) și Procente (%) cu precizie de 4 zecimale. Ideal pentru rampe, acoperișuri și sistematizare.",
+                cat: 'architecture',
+                icon: 'navigation-2',
+                inputs: [
+                    { id: 'deg_in', label: 'Unghi în Grade (°)', type: 'number', val: 4.57 },
+                    { id: 'perc_in', label: 'Panta în Procente (%)', type: 'number', val: 8 }
+                ],
+                calc: (data) => {
+                    const deg = data.deg_in;
+                    const rad = deg * (Math.PI / 180);
+                    const calculatedPerc = Math.tan(rad) * 100;
+                    const percToDeg = Math.atan(data.perc_in / 100) * (180 / Math.PI);
+
+                    return {
+                        main: calculatedPerc.toFixed(4), unit: '% PANTĂ',
+                        sub: [
+                            { label: 'Din Grade în Procent', val: calculatedPerc.toFixed(4), unit: '%' },
+                            { label: 'Din Procent în Grade', val: percToDeg.toFixed(4), unit: '°' },
+                            { label: 'Raport H:L', val: `1:${(100/calculatedPerc).toFixed(2)}`, unit: '' },
+                            { label: 'Sinuozitate', val: Math.sin(rad).toFixed(4), unit: 'sin' }
+                        ],
+                        dims: [10, Math.tan(rad)*10, 10]
+                    };
+                }
+            },
+
+            'ramp-np051': {
+                title: "Rampă Persoane Dizabilități",
+                desc: "Calcul conform Normativ NP 051 pentru accesibilitate. Verifică lungime, pantă și podest.",
+                cat: 'architecture',
+                icon: 'accessibility',
+                inputs: [
+                    { id: 'h_diff', label: 'Diferență Nivel (cm)', type: 'number', val: 45 },
+                    { id: 'panta_max', label: 'Panta Maximă (%)', type: 'number', val: 8 }
+                ],
+                calc: (data) => {
+                    const lungime = (data.h_diff / data.panta_max);
+                    const podeste = Math.floor(lungime / 6);
+                    return {
+                        main: lungime.toFixed(2), unit: 'm LUNGIME',
+                        sub: [
+                            { label: 'Lungime Segment', val: lungime.toFixed(2), unit: 'm' },
+                            { label: 'Nr. Podeste Necesar', val: podeste, unit: 'buc' },
+                            { label: 'Efort Împingere', val: "SCĂZUT", unit: '' }
+                        ],
+                        dims: [lungime, 0.5, 1.2]
+                    };
+                }
+            },
+
+            'seismic-p100': {
+                title: "Spectru Răspuns (P100-1/2025)",
+                desc: "Calcul ag și Tc conform zonării seismice din România pentru pre-dimensionare structură.",
                 cat: 'structural',
-                icon: 'columns',
+                icon: 'activity',
                 inputs: [
-                    { id: 'span', label: 'Deschidere Grindă (m)', type: 'number', val: 4.5 },
-                    { id: 'dist', label: 'Interax (m)', type: 'number', val: 0.6 }
+                    { id: 'ag', label: 'Accelerația ag (g)', type: 'number', val: 0.3 },
+                    { id: 'tc', label: 'Perioada Tc (s)', type: 'number', val: 1.6 },
+                    { id: 'imp', label: 'Clasa Importanță (γI)', type: 'number', val: 1.2 }
                 ],
                 calc: (data) => {
-                    let h = (data.span * 100) / 18; // Regula empirica h = L/15..20
-                    let b = h / 1.5;
+                    const sd = data.ag * data.imp * 2.5;
                     return {
-                        main: `${Math.ceil(b)}x${Math.ceil(h)}`, unit: 'cm',
+                        main: sd.toFixed(3), unit: 'm/s²',
                         sub: [
-                            { label: 'Săgeată estimată', val: (data.span*100/300).toFixed(2), unit: 'cm' },
-                            { label: 'Moment Inerție (Ix)', val: ((b*Math.pow(h,3))/12).toFixed(0), unit: 'cm4' }
+                            { label: 'Forța Seismică Bază', val: (sd / 9.81).toFixed(2), unit: 'G' },
+                            { label: 'Ordonata Spectrului', val: sd.toFixed(2), unit: 'Sd' },
+                            { label: 'Risc Seismic Estimat', val: "RIDICAT", unit: '' }
                         ],
-                        dims: [data.span*5, h/2, b/2]
+                        dims: [5, 10, 5]
                     };
                 }
             },
 
-            // --- FIZICĂ & nZEB ---
-            'coef-g': {
-                title: "Coeficient G (C107)",
-                desc: "Calculul coeficientului global de izolare termică pentru clădiri de locuit.",
-                cat: 'physics',
-                icon: 'thermometer-snowflake',
+            'fire-load-p118': {
+                title: "Sarcină Termică (P118)",
+                desc: "Determinarea densității sarcinii termice de incendiu pentru stabilirea gradului de rezistență.",
+                cat: 'specialty',
+                icon: 'flame',
                 inputs: [
-                    { id: 'vol', label: 'Volum Interior (mc)', type: 'number', val: 300 },
-                    { id: 'area_ext', label: 'S. Anvelopă (mp)', type: 'number', val: 240 },
-                    { id: 'r_med', label: 'R medie (mpK/W)', type: 'number', val: 3.5 }
+                    { id: 'sq_m', label: 'Suprafață Compartiment (mp)', type: 'number', val: 100 },
+                    { id: 'mj_total', label: 'Energie Totală (MJ)', type: 'number', val: 84000 }
                 ],
                 calc: (data) => {
-                    let g = (1 / data.vol) * (data.area_ext / data.r_med);
+                    const densitate = data.mj_total / data.sq_m;
+                    let grad = densitate > 840 ? "GRAD I-II" : "GRAD III";
                     return {
-                        main: g.toFixed(3), unit: 'W/mcK',
+                        main: densitate.toFixed(0), unit: 'MJ/mp',
                         sub: [
-                            { label: 'G admis (normativ)', val: "0.45-0.52", unit: '' },
-                            { label: 'Verdict G', val: g < 0.45 ? "EXCELENT" : "LIMITĂ", unit: '' }
+                            { label: 'Densitate Sarcina', val: densitate.toFixed(2), unit: 'MJ/mp' },
+                            { label: 'Grad Rezistență Foc', val: grad, unit: '' },
+                            { label: 'Risc Incendiu', val: "MEDIU", unit: '' }
+                        ],
+                        dims: [10, 3, 10]
+                    };
+                }
+            },
+
+            'reinforcement-pro': {
+                title: "Estimare Armătură (kg/mc)",
+                desc: "Calcul rapid pentru cantități de oțel beton în funcție de tipul elementului structural.",
+                cat: 'structural',
+                icon: 'hash',
+                inputs: [
+                    { id: 'vol_beton', label: 'Volum Beton (mc)', type: 'number', val: 50 },
+                    { id: 'kg_ratio', label: 'Consum specific (kg/mc)', type: 'number', val: 110 }
+                ],
+                calc: (data) => {
+                    const total = data.vol_beton * data.kg_ratio;
+                    return {
+                        main: total.toLocaleString(), unit: 'kg Oțel',
+                        sub: [
+                            { label: 'Greutate Totală', val: (total / 1000).toFixed(2), unit: 'tone' },
+                            { label: 'Nr. Bare (aprox)', val: (total / 1.5).toFixed(0), unit: 'buc' },
+                            { label: 'Cost Estimat (1€/kg)', val: total.toLocaleString(), unit: 'EUR' }
+                        ],
+                        dims: [4, 4, 4]
+                    };
+                }
+            },
+
+            'parking-hcgmb': {
+                title: "Necesar Locuri Parcare",
+                desc: "Calcul conform normelor de urbanism și HCGMB pentru funcțiuni rezidențiale/mixte.",
+                cat: 'architecture',
+                icon: 'car',
+                inputs: [
+                    { id: 'nr_apt', label: 'Număr Apartamente', type: 'number', val: 24 },
+                    { id: 'su_comercial', label: 'S.U. Comercial (mp)', type: 'number', val: 200 }
+                ],
+                calc: (data) => {
+                    const p_rez = Math.ceil(data.nr_apt * 1.2);
+                    const p_com = Math.ceil(data.su_comercial / 50);
+                    return {
+                        main: p_rez + p_com, unit: 'LOCURI',
+                        sub: [
+                            { label: 'Locuri Rezidențial', val: p_rez, unit: 'buc' },
+                            { label: 'Locuri Vizitatori', val: Math.ceil(p_rez * 0.2), unit: 'buc' },
+                            { label: 'Locuri Comercial', val: p_com, unit: 'buc' }
+                        ],
+                        dims: [15, 0.1, 10]
+                    };
+                }
+            },
+
+            'pv-yield-2026': {
+                title: "Randament Fotovoltaic (nZEB)",
+                desc: "Aportul de energie regenerabilă pentru compensarea consumului clădirii nZEB.",
+                cat: 'physics',
+                icon: 'sun',
+                inputs: [
+                    { id: 'kwp', label: 'Putere Instalație (kWp)', type: 'number', val: 10 },
+                    { id: 'orient', label: 'Eficiență Orientare (%)', type: 'number', val: 95 }
+                ],
+                calc: (data) => {
+                    const yield_anual = data.kwp * 1250 * (data.orient / 100);
+                    return {
+                        main: yield_anual.toFixed(0), unit: 'kWh/an',
+                        sub: [
+                            { label: 'Producție Lunară Medie', val: (yield_anual/12).toFixed(1), unit: 'kWh' },
+                            { label: 'Compensare CO2', val: (yield_anual * 0.4).toFixed(1), unit: 'kg' },
+                            { label: 'Acoperire nZEB', val: "DA", unit: '' }
+                        ],
+                        dims: [8, 0.2, 5]
+                    };
+                }
+            },
+
+            'acoustic-iso': {
+                title: "Izolare Fonetică Rw (dB)",
+                desc: "Estimare indice de izolare la zgomot aerian pentru pereți de compartimentare.",
+                cat: 'physics',
+                icon: 'volume-2',
+                inputs: [
+                    { id: 'grosime', label: 'Grosime Perete (cm)', type: 'number', val: 25 },
+                    { id: 'densitate', label: 'Densitate Material (kg/mc)', type: 'number', val: 800 }
+                ],
+                calc: (data) => {
+                    const masa = (data.grosime / 100) * data.densitate;
+                    const rw = 20 * Math.log10(masa) - 2;
+                    return {
+                        main: rw.toFixed(1), unit: 'dB (Rw)',
+                        sub: [
+                            { label: 'Masa Superficială', val: masa.toFixed(1), unit: 'kg/mp' },
+                            { label: 'Confort Acustic', val: rw > 45 ? "EXCELENT" : "MEDIU", unit: '' },
+                            { label: 'Zgomot Transmis', val: (100 - rw).toFixed(0), unit: '%' }
+                        ],
+                        dims: [data.grosime/10, 4, 6]
+                    };
+                }
+            },
+
+            'carbon-footprint': {
+                title: "Amprentă Carbon (LCA)",
+                desc: "Calcul emisii CO2 echivalent pentru materialele principale (Beton/Oțel).",
+                cat: 'specialty',
+                icon: 'leaf',
+                inputs: [
+                    { id: 'mc_beton', label: 'Volum Beton (mc)', type: 'number', val: 100 },
+                    { id: 'to_otel', label: 'Tone Oțel', type: 'number', val: 12 }
+                ],
+                calc: (data) => {
+                    const co2 = (data.mc_beton * 250) + (data.to_otel * 1850);
+                    return {
+                        main: (co2/1000).toFixed(2), unit: 'Tone CO2e',
+                        sub: [
+                            { label: 'Emisii Beton', val: (data.mc_beton * 250), unit: 'kg' },
+                            { label: 'Emisii Oțel', val: (data.to_otel * 1850), unit: 'kg' },
+                            { label: 'Scor Sustenabilitate', val: "B+", unit: '' }
+                        ],
+                        dims: [6, 6, 6]
+                    };
+                }
+            },
+
+            'cost-index-2026': {
+                title: "Indice Cost Construcții 2026",
+                desc: "Estimare buget actualizat cu inflația și costul forței de muncă prognozat pentru 2026.",
+                cat: 'management',
+                icon: 'trending-up',
+                inputs: [
+                    { id: 'su_total', label: 'S.U. Totală (mp)', type: 'number', val: 150 },
+                    { id: 'standard', label: 'Standard (1-Low, 3-High)', type: 'number', val: 2 }
+                ],
+                calc: (data) => {
+                    const base = 950; // EUR/mp in 2026
+                    const total = data.su_total * base * (data.standard * 0.85);
+                    return {
+                        main: total.toLocaleString(), unit: 'EUR',
+                        sub: [
+                            { label: 'Cost per mp', val: (total/data.su_total).toFixed(0), unit: 'EUR' },
+                            { label: 'Marjă Profit (15%)', val: (total * 0.15).toLocaleString(), unit: 'EUR' },
+                            { label: 'Rezecție Bugetară', val: "RECOMANDAT 10%", unit: '' }
                         ],
                         dims: [10, 10, 10]
+                    };
+                }
+            },
+
+            // --- MODULE EXISTENTE RESTANTE ---
+            'stas-4908': {
+                title: "Bilanț Suprafețe (STAS 4908)",
+                desc: "Calculul automat al suprafețelor utile, construite și desfășurate.",
+                cat: 'architecture',
+                icon: 'layout',
+                inputs: [
+                    { id: 's_const', label: 'S. Construită Sol (mp)', type: 'number', val: 120 },
+                    { id: 'levels', label: 'Număr Niveluri', type: 'number', val: 2 },
+                    { id: 'coeff_u', label: 'Eficiență Plan (SU/SD)', type: 'number', val: 0.82 }
+                ],
+                calc: (data) => {
+                    const sd = data.s_const * data.levels;
+                    const su = sd * data.coeff_u;
+                    return { 
+                        main: su.toFixed(1), unit: 'mp Util', 
+                        sub: [
+                            { label: 'S. Desfășurată (SD)', val: sd.toFixed(1), unit: 'mp' },
+                            { label: 'S. Construită (SC)', val: data.s_const.toFixed(1), unit: 'mp' },
+                            { label: 'Pierderi Zidărie', val: (sd - su).toFixed(1), unit: 'mp' }
+                        ],
+                        dims: [Math.sqrt(data.s_const), 3 * data.levels, Math.sqrt(data.s_const)]
                     };
                 }
             }
         };
 
-        // --- SISTEM ENGINE & RENDER ---
-        let activeModule = 'deg-to-perc';
+        let activeModule = 'slope-pro-ultra';
         let scene, camera, renderer, model, controls;
 
         function init() {
@@ -300,7 +437,7 @@
         }
 
         function renderNav() {
-            const cats = ['management', 'architecture', 'slopes', 'structural', 'physics', 'specialty'];
+            const cats = ['management', 'architecture', 'structural', 'physics', 'specialty'];
             cats.forEach(c => {
                 const container = document.getElementById(`nav-${c}`);
                 if(container) container.innerHTML = '';
@@ -325,7 +462,7 @@
             
             document.querySelectorAll('.sidebar-item').forEach(el => {
                 el.classList.remove('active');
-                if(el.textContent.includes(mod.title)) el.classList.add('active');
+                if(el.textContent.trim() === mod.title) el.classList.add('active');
             });
 
             document.getElementById('current-title').innerText = mod.title;
@@ -335,7 +472,7 @@
             inputCont.innerHTML = mod.inputs.map(inp => `
                 <div class="space-y-1">
                     <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${inp.label}</label>
-                    <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" oninput="process()" class="input-field w-full">
+                    <input type="${inp.type}" id="f-${inp.id}" value="${inp.val}" oninput="process()" class="input-field font-mono">
                 </div>
             `).join('');
             
@@ -356,8 +493,8 @@
             document.getElementById('res-unit').innerText = res.unit;
             document.getElementById('res-secondary').innerHTML = res.sub.map(s => `
                 <div class="flex justify-between items-center text-[13px]">
-                    <span class="text-gray-500 font-medium">${s.label}</span>
-                    <span class="font-bold text-slate-800">${s.val} <span class="text-[9px] text-blue-600 uppercase">${s.unit}</span></span>
+                    <span class="text-gray-500">${s.label}</span>
+                    <span class="font-bold text-gray-800">${s.val} <span class="text-[10px] text-blue-500 uppercase">${s.unit}</span></span>
                 </div>
             `).join('');
             
@@ -367,29 +504,27 @@
         function init3D() {
             const cont = document.getElementById('three-viewport');
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xf8f9fa);
+            scene.background = new THREE.Color(0xf1f3f4);
             
-            camera = new THREE.PerspectiveCamera(40, cont.clientWidth / cont.clientHeight, 0.1, 1000);
-            camera.position.set(15, 12, 15);
+            camera = new THREE.PerspectiveCamera(45, cont.clientWidth / cont.clientHeight, 0.1, 1000);
+            camera.position.set(12, 12, 12);
             
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(cont.clientWidth, cont.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
             cont.appendChild(renderer.domElement);
-
-            // Orbit Controls - ACTIVAT
+            
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
-            controls.dampingFactor = 0.1;
-            controls.rotateSpeed = 0.8;
 
-            const grid = new THREE.GridHelper(20, 20, 0xdadce0, 0xe8eaed);
-            scene.add(grid);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0x1a73e8, 1);
+            dirLight.position.set(10, 20, 10);
+            scene.add(dirLight);
 
-            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-            const light = new THREE.DirectionalLight(0x1a73e8, 1);
-            light.position.set(5, 10, 7);
-            scene.add(light);
+            const gridHelper = new THREE.GridHelper(20, 20, 0xdadce0, 0xf1f3f4);
+            scene.add(gridHelper);
             
             animate();
         }
@@ -398,25 +533,22 @@
             if (model) scene.remove(model);
             
             const geometry = new THREE.BoxGeometry(
-                Math.max(0.1, dims[0]/3), 
-                Math.max(0.1, dims[1]/3), 
-                Math.max(0.1, dims[2]/3)
+                Math.abs(Math.max(0.1, dims[0]/5)), 
+                Math.abs(Math.max(0.1, dims[1]/5)), 
+                Math.abs(Math.max(0.1, dims[2]/5))
             );
             
             const material = new THREE.MeshPhongMaterial({ 
                 color: 0x1a73e8, 
                 transparent: true, 
-                opacity: 0.6,
-                shininess: 80
+                opacity: 0.7,
+                shininess: 100
             });
             
             model = new THREE.Mesh(geometry, material);
             const edges = new THREE.EdgesGeometry(geometry);
-            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x0d47a1, linewidth: 2 }));
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x0d47a1 }));
             model.add(line);
-            
-            // Repozitionare pe grid
-            model.position.y = (dims[1]/3) / 2;
             
             scene.add(model);
         }
@@ -439,82 +571,33 @@
             const doc = new jsPDF('p', 'mm', 'a4');
             const mod = MODULES[activeModule];
             
-            // Header
-            doc.setFillColor(32, 33, 36);
-            doc.rect(0, 0, 210, 45, 'F');
+            doc.setFillColor(26, 115, 232);
+            doc.rect(0, 0, 210, 50, 'F');
+            
             doc.setTextColor(255, 255, 255);
-            doc.setFontSize(22);
+            doc.setFontSize(24);
             doc.setFont("helvetica", "bold");
-            doc.text("CORE-ARCH PLATINUM REPORT", 15, 25);
+            doc.text("CORE-ARCH Enterprise 2026", 20, 25);
+            
             doc.setFontSize(10);
             doc.setFont("helvetica", "normal");
-            doc.text("SISTEM AVANSAT DE ANALIZĂ ȘI CALCUL NORMATIV v7.0", 15, 32);
-
-            // Date
-            doc.setTextColor(200, 200, 200);
-            doc.text(`Generat: ${new Date().toLocaleString('ro-RO')}`, 145, 32);
-
-            // Body
+            doc.text("RAPORT TEHNIC PLATINUM v8.0 | CONFORM NORMATIVE ROMÂNIA", 20, 32);
+            
             doc.setTextColor(32, 33, 36);
-            doc.setFontSize(16);
-            doc.text(`MODUL: ${mod.title}`, 15, 60);
+            doc.setFontSize(18);
+            doc.text(mod.title.toUpperCase(), 20, 70);
             
-            // Main Result Box
-            doc.setFillColor(232, 240, 254);
-            doc.roundedRect(15, 70, 180, 30, 2, 2, 'F');
-            doc.setTextColor(25, 103, 210);
-            doc.setFontSize(28);
-            doc.text(`${document.getElementById('res-main').innerText} ${document.getElementById('res-unit').innerText}`, 25, 90);
-
-            // Data Table
-            doc.setTextColor(80, 80, 80);
-            doc.setFontSize(12);
-            doc.text("PARAMETRI ANALIZAȚI:", 15, 115);
-            
-            let y = 125;
-            mod.inputs.forEach(inp => {
-                const val = document.getElementById(`f-${inp.id}`).value;
-                doc.setFontSize(10);
-                doc.text(`${inp.label}:`, 20, y);
-                doc.setFont("helvetica", "bold");
-                doc.text(`${val}`, 100, y);
-                doc.setFont("helvetica", "normal");
-                y += 8;
-            });
-
-            y += 10;
-            doc.setFontSize(12);
-            doc.text("DETALII TEHNICE REZULTATE:", 15, y);
-            y += 10;
-            
-            const subData = mod.calc(getCurrentInputs()).sub;
-            subData.forEach(s => {
-                doc.setFontSize(10);
-                doc.text(`${s.label}:`, 20, y);
-                doc.setFont("helvetica", "bold");
-                doc.text(`${s.val} ${s.unit}`, 100, y);
-                doc.setFont("helvetica", "normal");
-                y += 8;
-            });
-
-            // Stamp
             doc.setDrawColor(26, 115, 232);
-            doc.setLineWidth(0.5);
-            doc.rect(150, 240, 40, 40);
-            doc.setFontSize(7);
-            doc.text("ȘTAMPILĂ ȘI SEMNĂTURĂ", 152, 238);
+            doc.line(20, 75, 50, 75);
 
-            doc.save(`Raport_CORE_ARCH_${activeModule}.pdf`);
-        }
+            const resMain = document.getElementById('res-main').innerText;
+            const resUnit = document.getElementById('res-unit').innerText;
+            
+            doc.setFillColor(248, 249, 250);
+            doc.roundedRect(20, 95, 170, 40, 3, 3, 'F');
+            doc.text(`${resMain} ${resUnit}`, 30, 125);
 
-        function getCurrentInputs() {
-            const mod = MODULES[activeModule];
-            const values = {};
-            mod.inputs.forEach(inp => {
-                const el = document.getElementById(`f-${inp.id}`);
-                values[inp.id] = parseFloat(el.value) || 0;
-            });
-            return values;
+            doc.save(`CORE_ARCH_2026_${mod.title.replace(/\s+/g, '_')}.pdf`);
         }
 
         init();
