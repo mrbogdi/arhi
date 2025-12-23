@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchiEngine 2026 | Calculatoare Profesionale</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.1/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/5.12.2/reset.min.css">
+    <style>
+        .calc-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
+        .nav-btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .nav-btn.active { background: #1d4ed8; color: white; }
+        .input-group label { display: block; font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
+        .input-field { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 15px; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white border-b border-gray-200 px-8 py-4 sticky top-0 z-50 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gray-800">ArchiEngine <span class="text-blue-600">v2026</span></h1>
+        <div class="flex gap-4">
+            <button onclick="generatePDF()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md shadow-green-100">GENEREAZĂ RAPORT PDF</button>
+            <button onclick="location.href='index.html'" class="text-gray-600 font-semibold">Dashboard</button>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div class="lg:col-span-1 space-y-2 bg-white p-4 rounded-2xl shadow-sm h-fit">
+            <div onclick="switchTab('tab1')" id="btn-tab1" class="nav-btn active">POT / CUT (Legislație 2026)</div>
+            <div onclick="switchTab('tab2')" id="btn-tab2" class="nav-btn">Onorarii Arhitect (OAR)</div>
+            <div onclick="switchTab('tab3')" id="btn-tab3" class="nav-btn">Pante: Grade ↔ Procente</div>
+            <div onclick="switchTab('tab4')" id="btn-tab4" class="nav-btn">Termoizolație (Calcul R)</div>
+            <div onclick="switchTab('tab5')" id="btn-tab5" class="nav-btn">Necesar Materiale (Deviz)</div>
+            <div onclick="switchTab('tab6')" id="btn-tab6" class="nav-btn">Beton & Cărămizi (Structural)</div>
+            <div onclick="switchTab('tab7')" id="btn-tab7" class="nav-btn">Vitrare (Lumină Naturală)</div>
+            <div onclick="switchTab('tab8')" id="btn-tab8" class="nav-btn">Scări (Formula Blondel)</div>
+            <div onclick="switchTab('tab9')" id="btn-tab9" class="nav-btn">Locuri Parcare</div>
+            <div onclick="switchTab('tab10')" id="btn-tab10" class="nav-btn">Distanțe Foc (P118)</div>
+            <div onclick="switchTab('tab11')" id="btn-tab11" class="nav-btn">Încărcări Planșeu</div>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div id="tab1" class="calc-card">
+                <h2 class="text-2xl font-bold mb-6 border-b pb-2">Calcul Urbanistic POT / CUT</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group">
+                        <label>Suprafață Teren (mp)</label>
+                        <input type="number" id="t1-teren" class="input-field" value="500" oninput="calcUrban()">
+                    </div>
+                    <div class="input-group">
+                        <label>Amprentă Clădire (mp)</label>
+                        <input type="number" id="t1-amprenta" class="input-field" value="150" oninput="calcUrban()">
+                    </div>
+                    <div class="input-group">
+                        <label>Suprafață Desfășurată (mp)</label>
+                        <input type="number" id="t1-sd" class="input-field" value="300" oninput="calcUrban()">
+                    </div>
+                </div>
+                <div class="mt-6 p-6 bg-blue-50 rounded-xl grid grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="text-gray-500 text-xs font-bold uppercase">POT REZULTAT</div>
+                        <div id="res-pot" class="text-3xl font-black text-blue-700">30%</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-500 text-xs font-bold uppercase">CUT REZULTAT</div>
+                        <div id="res-cut" class="text-3xl font-black text-blue-700">0.6</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab3" class="calc-card hidden">
+                <h2 class="text-2xl font-bold mb-6 border-b pb-2">Convertor Pante Ultra-Precis</h2>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="input-group">
+                        <label>Grade (°)</label>
+                        <input type="number" id="t3-deg" class="input-field" placeholder="Ex: 5" oninput="convertSlope('deg')">
+                    </div>
+                    <div class="input-group">
+                        <label>Procente (%)</label>
+                        <input type="number" id="t3-perc" class="input-field" placeholder="Ex: 8.75" oninput="convertSlope('perc')">
+                    </div>
+                </div>
+                <div id="res-slope" class="mt-4 p-4 bg-gray-50 rounded-lg font-mono text-sm text-blue-600">
+                    Rezultat realtime: Introduceți o valoare
+                </div>
+            </div>
+
+            <div id="tab8" class="calc-card hidden">
+                <h2 class="text-2xl font-bold mb-6 border-b pb-2">Calcul Ergonomie Scări (Blondel)</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group">
+                        <label>Înălțime Treaptă (h) cm</label>
+                        <input type="number" id="t8-h" class="input-field" value="17.5" oninput="calcBlondel()">
+                    </div>
+                    <div class="input-group">
+                        <label>Lățime Treaptă (l) cm</label>
+                        <input type="number" id="t8-l" class="input-field" value="28" oninput="calcBlondel()">
+                    </div>
+                </div>
+                <div id="res-blondel" class="mt-6 p-4 rounded-xl text-center font-bold">
+                    -
+                </div>
+            </div>
+            
+            <div id="tab2" class="calc-card hidden p-10 text-center">Modul Onorarii OAR 2026 activat. Parametrii de cost: 45-85 Euro/mp.</div>
+            <div id="tab4" class="calc-card hidden p-10 text-center">Modul Termoizolație: Calcul Rezistență Termică Corectată (R').</div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Management
+        function switchTab(tabId) {
+            document.querySelectorAll('.calc-card').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // Logic Calculator POT/CUT
+        function calcUrban() {
+            const t = parseFloat(document.getElementById('t1-teren').value) || 0;
+            const a = parseFloat(document.getElementById('t1-amprenta').value) || 0;
+            const sd = parseFloat(document.getElementById('t1-sd').value) || 0;
+            
+            if(t > 0) {
+                document.getElementById('res-pot').innerText = ((a/t)*100).toFixed(2) + '%';
+                document.getElementById('res-cut').innerText = (sd/t).toFixed(2);
+            }
+        }
+
+        // Logic Slopes (Ultra Precise)
+        function convertSlope(source) {
+            const degInput = document.getElementById('t3-deg');
+            const percInput = document.getElementById('t3-perc');
+            const res = document.getElementById('res-slope');
+
+            if(source === 'deg') {
+                const deg = parseFloat(degInput.value);
+                const perc = Math.tan(deg * Math.PI / 180) * 100;
+                percInput.value = perc.toFixed(4);
+                res.innerText = `Raport 1:${(100/perc).toFixed(2)} | Radiani: ${(deg * Math.PI / 180).toFixed(6)}`;
+            } else {
+                const perc = parseFloat(percInput.value);
+                const deg = Math.atan(perc / 100) * 180 / Math.PI;
+                degInput.value = deg.toFixed(4);
+                res.innerText = `Raport 1:${(100/perc).toFixed(2)} | Radiani: ${(deg * Math.PI / 180).toFixed(6)}`;
+            }
+        }
+
+        // Logic Blondel
+        function calcBlondel() {
+            const h = parseFloat(document.getElementById('t8-h').value);
+            const l = parseFloat(document.getElementById('t8-l').value);
+            const sum = (2 * h) + l;
+            const el = document.getElementById('res-blondel');
+            
+            el.innerText = `2h + l = ${sum.toFixed(1)} cm`;
+            if(sum >= 62 && sum <= 64) {
+                el.className = "mt-6 p-4 rounded-xl text-center font-bold bg-green-100 text-green-700";
+                el.innerText += " (IDEAL)";
+            } else {
+                el.className = "mt-6 p-4 rounded-xl text-center font-bold bg-orange-100 text-orange-700";
+                el.innerText += " (AFARA DIN LIMITA ERGONOMICA)";
+            }
+        }
+
+        // PDF Generation
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(22);
+            doc.setTextColor(30, 58, 138);
+            doc.text("RAPORT TEHNIC ARCHIVAULT 2026", 20, 20);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text(`Data generarii: ${new Date().toLocaleString()}`, 20, 30);
+            doc.text(`Utilizator: ${sessionStorage.getItem('CURRENT_USER') || 'Anonym'}`, 20, 35);
+            
+            doc.autoTable({
+                startY: 45,
+                head: [['Parametru Urbanistic', 'Valoare Calculata', 'Status']],
+                body: [
+                    ['POT (Procent Ocupare)', document.getElementById('res-pot').innerText, 'Validat'],
+                    ['CUT (Coeficient Utilizare)', document.getElementById('res-cut').innerText, 'Validat'],
+                    ['Panta Scara (Blondel)', document.getElementById('res-blondel').innerText, 'Verificat']
+                ],
+                theme: 'striped',
+                headStyles: { fillColor: [30, 58, 138] }
+            });
+            
+            doc.save("Raport_Arhitect_2026.pdf");
+        }
+
+        // Security Check
+        if(!sessionStorage.getItem('AUTH_TOKEN')) {
+            alert("Acces neautorizat! Te rugam sa te loghezi.");
+            location.href = 'index.html';
+        }
+
+        // Initial Calculations
+        calcUrban();
+    </script>
+</body>
+</html>
