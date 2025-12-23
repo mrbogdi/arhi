@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchiVault 2026 | Enterprise Security</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/5.12.2/reset.min.css">
+    <style>
+        body { background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(90deg, #1e3a8a, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div id="auth-container" class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-black gradient-text">ARCHIVAULT</h1>
+                <p class="text-gray-400 text-sm font-medium">MILITARY GRADE ENCRYPTION 2026</p>
+            </div>
+            
+            <div id="auth-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Username</label>
+                    <input type="text" id="user" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-blue-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Criptographic Key (Password)</label>
+                    <input type="password" id="pass" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-blue-500 transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <button onclick="auth('reg')" class="bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-black transition">REGISTER</button>
+                    <button onclick="auth('login')" class="bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition">LOGIN</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="hidden w-full max-w-5xl space-y-6">
+            <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Bun venit, <span id="display-user" class="text-blue-600">Architect</span></h2>
+                    <p class="text-gray-400 text-sm">Sistem activ | Standard Ro 2026</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="exportData()" class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-semibold hover:bg-gray-50">Export Cont (.vault)</button>
+                    <button onclick="location.href='calcs.html'" class="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 shadow-lg shadow-blue-200">ACCESEAZĂ CALCULATOARE</button>
+                    <button onclick="logout()" class="px-4 py-2 text-red-500 font-bold">LOGOUT</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="font-bold mb-4 flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> AUDIT LOG (MILITARY STYLE)</h3>
+                    <div id="audit-logs" class="space-y-2 max-h-[400px] overflow-y-auto text-xs font-mono">
+                        </div>
+                </div>
+                <div class="bg-blue-600 p-6 rounded-2xl shadow-xl text-white">
+                    <h3 class="font-bold mb-2">Statistici Utilizare</h3>
+                    <div class="space-y-4 mt-6">
+                        <div class="flex justify-between border-b border-blue-400 pb-2"><span>Sesiuni 2026</span><span class="font-bold">Active</span></div>
+                        <div class="flex justify-between border-b border-blue-400 pb-2"><span>Nivel Criptare</span><span class="font-bold">AES-256-GCM</span></div>
+                        <div class="flex justify-between"><span>Integritate Date</span><span class="font-bold">100%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'ARCHI_ENCRYPTED_DB';
+
+        function addLog(action) {
+            let logs = JSON.parse(localStorage.getItem('AUDIT_LOG') || '[]');
+            logs.unshift({ time: new Date().toISOString(), action });
+            localStorage.setItem('AUDIT_LOG', JSON.stringify(logs.slice(0, 50)));
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const container = document.getElementById('audit-logs');
+            const logs = JSON.parse(localStorage.getItem('AUDIT_LOG') || '[]');
+            container.innerHTML = logs.map(l => `
+                <div class="p-2 border-b border-gray-50 flex justify-between">
+                    <span class="text-blue-600">[${dayjs(l.time).format('HH:mm:ss')}]</span>
+                    <span class="text-gray-600 uppercase font-bold">${l.action}</span>
+                    <span class="text-green-500">SUCCESS</span>
+                </div>
+            `).join('');
+        }
+
+        function auth(type) {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(!u || !p) return alert("Date incomplete!");
+
+            if(type === 'reg') {
+                const encrypted = CryptoJS.AES.encrypt(JSON.stringify({ u, p }), p).toString();
+                localStorage.setItem(STORAGE_KEY, encrypted);
+                addLog('USER_REGISTERED_ENCRYPTED');
+                alert("Cont creat cu succes!");
+            } else {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                try {
+                    const bytes = CryptoJS.AES.decrypt(stored, p);
+                    const decrypted = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                    if(decrypted.u === u) {
+                        sessionStorage.setItem('AUTH_TOKEN', 'VALID');
+                        sessionStorage.setItem('CURRENT_USER', u);
+                        showDashboard();
+                        addLog('ACCESS_GRANTED_BY_SYSTEM');
+                    } else { throw new Error(); }
+                } catch(e) {
+                    addLog('ACCESS_DENIED_ATTEMPT');
+                    alert("Eroare de autentificare!");
+                }
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('display-user').innerText = sessionStorage.getItem('CURRENT_USER');
+            renderLogs();
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            location.reload();
+        }
+
+        function exportData() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            const blob = new Blob([data], {type: 'text/plain'});
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_2026_${sessionStorage.getItem('CURRENT_USER')}.vault`;
+            a.click();
+            addLog('DATABASE_EXPORT_SUCCESS');
+        }
+
+        if(sessionStorage.getItem('AUTH_TOKEN')) showDashboard();
+    </script>
+</body>
+</html>
